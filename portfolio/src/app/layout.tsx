@@ -2,17 +2,16 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ScrollProgress from "@/components/ScrollProgress";
 import { ThemeProvider } from "@/lib/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Mrinal Agarwal — AI Researcher, Mathematician & Developer",
   description:
-    "Portfolio of Mrinal Agarwal — NeurIPS spotlighted AI researcher, nationally ranked debater, AMC/AIME mathematician, and full-stack developer from Emerald High School.",
+    "Portfolio of Mrinal Agarwal — NeurIPS spotlighted AI researcher, nationally ranked debater, AMC/AIME mathematician, and builder of DebateSim and MathSim.",
   authors: [{ name: "Mrinal Agarwal" }],
 };
 
-// Prevents flash of wrong theme on initial render.
-// Runs synchronously before React hydrates.
 const themeScript = `
 (function(){
   try {
@@ -31,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <ThemeProvider>
+          <ScrollProgress />
           <Navbar />
           <main>{children}</main>
           <Footer />

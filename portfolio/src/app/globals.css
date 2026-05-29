@@ -235,6 +235,26 @@ body {
 /* ─── Theme transition override for instant initial render ── */
 html.no-transition * { transition: none !important; }
 
+/* ─── Depth / layering ───────────────────────────────── */
+.surface-elevated {
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+}
+
+/* ─── Accent stripe for cards ────────────────────────── */
+.accent-stripe-top {
+  position: relative;
+}
+.accent-stripe-top::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), #7C3AED);
+  border-radius: 12px 12px 0 0;
+}
+
 /* ─── Stat number ────────────────────────────────────── */
 .stat-num {
   font-size: clamp(2rem, 4vw, 3rem);

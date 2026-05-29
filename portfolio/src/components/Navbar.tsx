@@ -69,16 +69,15 @@ export default function Navbar() {
                   fontWeight: active ? "500" : "400",
                 }}
               >
-                {link.label}
                 {active && (
                   <motion.span
                     layoutId="nav-indicator"
                     className="absolute inset-0 rounded-md"
-                    style={{ background: "var(--bg-subtle)" }}
+                    style={{ background: "var(--bg-subtle)", zIndex: 0 }}
                     transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 )}
-                <span className="relative z-10">{null}</span>
+                <span style={{ position: "relative", zIndex: 1 }}>{link.label}</span>
               </Link>
             );
           })}
