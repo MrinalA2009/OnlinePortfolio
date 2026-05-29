@@ -5,12 +5,12 @@ import StatCounter from "@/components/StatCounter";
 import Link from "next/link";
 
 const timeline = [
-  { year: "2020", title: "Competition Math Begins", desc: "Started competing nationally in NOETIC and MOEMS, earning perfect scores. Developed a deep love for mathematical proof and elegant problem-solving.", tags: ["NOETIC", "MOEMS"] },
-  { year: "2021", title: "KoolMath Institute — Lead Volunteer", desc: "Began tutoring 100+ students in competition mathematics. Accumulated 200+ hours helping students earn national recognition.", tags: ["Tutoring", "Competition Math"] },
-  { year: "2022", title: "Web Development & DebateSim", desc: "Started building full-stack web applications. Conceptualized DebateSim, an AI-powered platform for debate training and legislative analysis.", tags: ["Python", "HTML/CSS", "AI Tools"] },
-  { year: "2023", title: "Math Club President & MATHCOUNTS States", desc: "Elected EHS Math Club President. Became the first student from the prior team to qualify to MATHCOUNTS States. Started tutoring at Fallon MATHCOUNTS.", tags: ["MATHCOUNTS", "Leadership"] },
-  { year: "2024", title: "AIME Qualifier & Debate", desc: "Qualified for AIME (top 5% nationally). Entered competitive Public Forum Debate. Earned Git & GitHub certification. Became Varsity Badminton Captain.", tags: ["AIME", "Debate", "Certification"] },
-  { year: "2025", title: "NeurIPS Spotlight & National Champion", desc: "AI research spotlighted at NeurIPS and IJCNLP-AACL — top 0.1% among 400+ PhD researchers. Ranked 2nd in Nation in Debate. National Sunvite Champion. Founded Summer Math Bootcamp. Earned AP Scholar Award.", tags: ["NeurIPS", "Research", "National Champion", "AP Scholar"] },
+  { year: "2020", color: "#3B82F6", title: "Competition Math Begins", desc: "Started competing nationally in NOETIC and MOEMS, earning perfect scores. Developed a deep love for mathematical proof and elegant problem-solving.", tags: ["NOETIC", "MOEMS"] },
+  { year: "2021", color: "#7C3AED", title: "KoolMath Institute — Lead Volunteer", desc: "Began tutoring 100+ students in competition mathematics. Accumulated 200+ hours helping students earn national recognition.", tags: ["Tutoring", "Competition Math"] },
+  { year: "2022", color: "#06B6D4", title: "Web Development & DebateSim", desc: "Started building full-stack web applications. Conceptualized DebateSim, an AI-powered platform for debate training and legislative analysis.", tags: ["Python", "HTML/CSS", "AI Tools"] },
+  { year: "2023", color: "#10B981", title: "Math Club President & MATHCOUNTS States", desc: "Elected EHS Math Club President. Became the first student from the prior team to qualify to MATHCOUNTS States. Started tutoring at Fallon MATHCOUNTS.", tags: ["MATHCOUNTS", "Leadership"] },
+  { year: "2024", color: "#F59E0B", title: "AIME Qualifier & National Debate", desc: "Qualified for AIME (top 5% nationally). Entered competitive Public Forum Debate. Earned Git & GitHub certification. Became Varsity Badminton Captain.", tags: ["AIME", "Debate", "Certification"] },
+  { year: "2025", color: "#2563EB", title: "NeurIPS Spotlight & National Champion", desc: "AI research spotlighted at NeurIPS and IJCNLP-AACL — recognized among 400+ researchers and PhD professionals. Ranked 2nd in Nation in Debate. National Sunvite Champion. Founded Summer Math Bootcamp. AP Scholar Award.", tags: ["NeurIPS", "Research", "National Champion", "AP Scholar"], latest: true },
 ];
 
 const interests = [
@@ -167,35 +167,118 @@ export default function AboutPage() {
           </div>
         </AnimatedSection>
 
-        {/* ── TIMELINE ── */}
-        <AnimatedSection>
-          <p className="label mb-3">Journey</p>
-          <h2 className="heading-xl mb-10">My Timeline</h2>
-          <div className="relative pl-7">
-            <div className="timeline-line" />
+        {/* ── TIMELINE — alternating zigzag (desktop), single column (mobile) ── */}
+        <div>
+          <AnimatedSection className="mb-12">
+            <p className="label mb-3">Journey</p>
+            <h2 className="heading-xl">My Timeline</h2>
+          </AnimatedSection>
+
+          {/* ── DESKTOP alternating layout ── */}
+          <div className="hidden md:block relative">
+            {/* Center vertical line */}
+            <div
+              className="absolute top-0 bottom-0 left-1/2 w-px"
+              style={{ background: "var(--border)", transform: "translateX(-50%)" }}
+            />
+
             <div className="space-y-8">
+              {timeline.map((item, i) => {
+                const isLeft = i % 2 === 0;
+                return (
+                  <div key={item.year} className="relative flex items-start gap-0">
+                    {/* Left slot */}
+                    <div className="w-[calc(50%-28px)] pr-8">
+                      {isLeft && (
+                        <motion.div
+                          initial={{ opacity: 0, x: -30 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true, margin: "-60px" }}
+                          transition={{ duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                          whileHover={{ y: -4, boxShadow: "var(--shadow-md)" }}
+                          className="card p-6 text-right"
+                          style={{ boxShadow: "var(--shadow-sm)", cursor: "default", transition: "box-shadow 0.25s, transform 0.25s, border-color 0.25s" }}
+                          onHoverStart={(e) => { (e.currentTarget as HTMLElement).style.borderColor = `${item.color}40`; }}
+                          onHoverEnd={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; }}
+                        >
+                          <TimelineCardContent item={item} />
+                        </motion.div>
+                      )}
+                    </div>
+
+                    {/* Center dot — 56px wide so it straddles the line */}
+                    <div className="w-14 flex justify-center items-start pt-5 flex-shrink-0 relative z-10">
+                      <motion.div
+                        initial={{ scale: 0, opacity: 0 }}
+                        whileInView={{ scale: 1, opacity: 1 }}
+                        viewport={{ once: true, margin: "-40px" }}
+                        transition={{ type: "spring", stiffness: 340, damping: 22, delay: i * 0.08 + 0.15 }}
+                        className={item.latest ? "tl-dot-pulse" : ""}
+                        style={{
+                          width: 14,
+                          height: 14,
+                          borderRadius: "50%",
+                          background: item.color,
+                          border: `3px solid var(--surface)`,
+                          boxShadow: `0 0 0 2px ${item.color}`,
+                          flexShrink: 0,
+                        }}
+                      />
+                    </div>
+
+                    {/* Right slot */}
+                    <div className="w-[calc(50%-28px)] pl-8">
+                      {!isLeft && (
+                        <motion.div
+                          initial={{ opacity: 0, x: 30 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true, margin: "-60px" }}
+                          transition={{ duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                          whileHover={{ y: -4, boxShadow: "var(--shadow-md)" }}
+                          className="card p-6"
+                          style={{ boxShadow: "var(--shadow-sm)", cursor: "default", transition: "box-shadow 0.25s, transform 0.25s, border-color 0.25s" }}
+                          onHoverStart={(e) => { (e.currentTarget as HTMLElement).style.borderColor = `${item.color}40`; }}
+                          onHoverEnd={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; }}
+                        >
+                          <TimelineCardContent item={item} />
+                        </motion.div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* ── MOBILE single-column layout ── */}
+          <div className="md:hidden relative pl-7">
+            <div className="timeline-line" />
+            <div className="space-y-7">
               {timeline.map((item, i) => (
                 <AnimatedSection key={item.year} delay={i * 0.07}>
-                  <div className="flex gap-5 items-start">
-                    <div className="timeline-dot -ml-[3.5px] mt-0.5" />
-                    <div className="flex-1 pb-2">
-                      <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                        <span className="label" style={{ fontSize: "10px" }}>{item.year}</span>
-                        <h3 className="heading-md text-sm">{item.title}</h3>
-                      </div>
-                      <p className="body-sm leading-relaxed mb-3">{item.desc}</p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {item.tags.map((tag) => (
-                          <span key={tag} className="tag">{tag}</span>
-                        ))}
-                      </div>
+                  <div className="flex gap-4 items-start">
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20, delay: i * 0.07 + 0.1 }}
+                      className={`-ml-[3px] mt-1.5 flex-shrink-0 ${item.latest ? "tl-dot-pulse" : ""}`}
+                      style={{
+                        width: 12, height: 12, borderRadius: "50%",
+                        background: item.color,
+                        border: "2.5px solid var(--surface)",
+                        boxShadow: `0 0 0 1.5px ${item.color}`,
+                      }}
+                    />
+                    <div className="flex-1">
+                      <TimelineCardContent item={item} />
                     </div>
                   </div>
                 </AnimatedSection>
               ))}
             </div>
           </div>
-        </AnimatedSection>
+        </div>
 
         {/* ── CTA ── */}
         <AnimatedSection className="mt-16">
@@ -212,5 +295,39 @@ export default function AboutPage() {
         </AnimatedSection>
       </div>
     </div>
+  );
+}
+
+function TimelineCardContent({ item }: {
+  item: { year: string; color: string; title: string; desc: string; tags: string[]; latest?: boolean };
+}) {
+  return (
+    <>
+      <div className="flex flex-wrap items-center gap-2 mb-2">
+        <span
+          className="text-xs font-bold px-2 py-0.5 rounded"
+          style={{ background: `${item.color}15`, color: item.color }}
+        >
+          {item.year}
+        </span>
+        {item.latest && (
+          <span
+            className="text-xs font-medium px-2 py-0.5 rounded"
+            style={{ background: "rgba(37,99,235,0.08)", color: "var(--accent)", border: "1px solid rgba(37,99,235,0.2)" }}
+          >
+            Present
+          </span>
+        )}
+      </div>
+      <h3 className="text-sm font-semibold mb-2 leading-snug" style={{ color: "var(--text-1)" }}>
+        {item.title}
+      </h3>
+      <p className="body-sm leading-relaxed mb-3">{item.desc}</p>
+      <div className="flex flex-wrap gap-1.5">
+        {item.tags.map((tag) => (
+          <span key={tag} className="tag">{tag}</span>
+        ))}
+      </div>
+    </>
   );
 }

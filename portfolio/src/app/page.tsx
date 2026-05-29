@@ -92,7 +92,7 @@ export default function Home() {
         <div
           className="absolute inset-0 z-10 pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse 60% 70% at 50% 50%, transparent 20%, var(--bg-base) 90%)",
+            background: "radial-gradient(ellipse 60% 70% at 50% 50%, transparent 30%, var(--surface) 88%)",
           }}
         />
 

@@ -4,15 +4,15 @@
 
 /* ─── Design tokens ──────────────────────────────────── */
 :root {
-  /* backgrounds */
-  --bg-base:    #F7F7F5;
-  --bg-subtle:  #EEEEED;
+  /* backgrounds — pure white, no warm-grey tint */
+  --bg-base:    #FFFFFF;
+  --bg-subtle:  #F5F5F5;
   --surface:    #FFFFFF;
-  --surface-2:  #FAFAF9;
+  --surface-2:  #FAFAFA;
 
   /* borders */
-  --border:        #E3E3E0;
-  --border-subtle: #EBEBEA;
+  --border:        #E5E5E5;
+  --border-subtle: #EFEFEF;
 
   /* text */
   --text-1: #1A1A1A;
@@ -293,4 +293,12 @@ html.no-transition * { transition: none !important; }
   border: 2px solid var(--accent);
   flex-shrink: 0;
   margin-top: 3px;
+}
+/* Alternating zigzag timeline dot — for the dynamic desktop layout */
+.tl-dot-pulse {
+  animation: tl-pulse 2.4s ease-in-out infinite;
+}
+@keyframes tl-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0.35); }
+  50%       { box-shadow: 0 0 0 7px rgba(37,99,235,0); }
 }

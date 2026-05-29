@@ -64,12 +64,13 @@ export default function BackgroundCanvas({ className = "" }: { className?: strin
     const getColors = () => {
       const dark = document.documentElement.getAttribute("data-theme") === "dark";
       return {
+        // Light mode: blue-tinted dots (not grey-black)
         dot: dark
-          ? (a: number) => `rgba(200,210,255,${a})`
-          : (a: number) => `rgba(30,60,120,${a})`,
+          ? (a: number) => `rgba(160,190,255,${a * 0.9})`
+          : (a: number) => `rgba(37,99,235,${a * 0.45})`,
         line: dark
-          ? (a: number) => `rgba(180,200,255,${a})`
-          : (a: number) => `rgba(37,99,235,${a})`,
+          ? (a: number) => `rgba(140,180,255,${a})`
+          : (a: number) => `rgba(37,99,235,${a * 0.6})`,
       };
     };
 
