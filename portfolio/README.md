@@ -1,74 +1,62 @@
 # Mrinal Agarwal — Online Portfolio
 
-A cinematic, interactive portfolio built with **Next.js 16**, **Tailwind CSS v4**, and **Framer Motion**.
+Cinematic portfolio built with **Next.js 16**, **Tailwind CSS v4**, and **Framer Motion**.
 
 **Live URL:** https://mrinala2009.github.io/OnlinePortfolio/
 
 ---
 
-## Pages
-
-| Route | Description |
-|---|---|
-| `/` | Home — hero, achievement cards, stat counters |
-| `/about` | About Me — bio, timeline, skills, interests |
-| `/resume` | Resume — education, extracurriculars, awards, skills |
-| `/projects` | Projects — DebateSim, MathSim, AI Safety Research |
-| `/contact` | Contact — animated form, social links |
-
----
-
 ## Running Locally
 
-**Prerequisites:** Node.js 18+ and npm.
-
 ```bash
-# 1. Navigate into the portfolio directory
 cd portfolio
-
-# 2. Install dependencies
 npm install
-
-# 3. Start the development server
 npm run dev
 ```
 
-Open **http://localhost:3000** in your browser. Hot-reloading is enabled.
+Open **http://localhost:3000**
 
 ---
 
-## Deploying to GitHub Pages
+## Deploy to GitHub Pages — Complete Guide
 
-Deployment is fully automated via GitHub Actions. Every push to `main` triggers a build and deploy.
+### How it works
 
-### One-Time Setup (do this once)
+Every push to `main` runs a GitHub Actions workflow that:
+1. Builds the site as a static export (`out/` directory)
+2. Pushes the output to the `gh-pages` branch
+3. GitHub Pages serves the `gh-pages` branch publicly
 
-**Step 1 — Push the repo to GitHub**
+---
+
+### Step-by-step deployment
+
+**Step 1 — Push the code to GitHub**
 
 ```bash
-# From the root of the repository (OnlinePortfolio/)
+# From the repo root (OnlinePortfolio/)
 git add .
-git commit -m "Initial portfolio commit"
+git commit -m "Deploy portfolio"
 git push origin main
 ```
 
-**Step 2 — Enable GitHub Pages in your repository settings**
+**Step 2 — Wait for the workflow to run (~2 minutes)**
 
-1. Go to your repository on GitHub → **Settings** → **Pages**
-2. Under **Source**, select **GitHub Actions**
+Go to your repo on GitHub → **Actions** tab.
+You should see "Deploy Portfolio to GitHub Pages" running.
+Wait for it to show a green checkmark ✅.
+
+This creates a `gh-pages` branch in your repo automatically.
+
+**Step 3 — Enable GitHub Pages (one time only)**
+
+1. Go to your repo → **Settings** → **Pages** (left sidebar)
+2. Under **"Build and deployment"**:
+   - **Source:** `Deploy from a branch`
+   - **Branch:** `gh-pages` → `/ (root)`
 3. Click **Save**
 
-That's it. GitHub Pages is now configured to deploy from the Actions workflow.
-
-**Step 3 — Trigger the first deployment**
-
-The workflow runs automatically on every push to `main`. You can also trigger it manually:
-
-1. Go to **Actions** tab in your GitHub repository
-2. Click **Deploy Portfolio to GitHub Pages**
-3. Click **Run workflow** → **Run workflow**
-
-After ~2 minutes, your site will be live at:
+Wait ~1 minute. Your site will be live at:
 
 ```
 https://mrinala2009.github.io/OnlinePortfolio/
@@ -76,77 +64,62 @@ https://mrinala2009.github.io/OnlinePortfolio/
 
 ---
 
-## How Deployment Works
+### Re-deploying
 
-```
-Push to main
-     │
-     ▼
-GitHub Actions: build job
-  ├── actions/checkout@v4          — clone the repo
-  ├── actions/setup-node@v4        — Node.js 20
-  ├── npm ci                       — install dependencies
-  ├── npm run build                — Next.js static export → portfolio/out/
-  ├── touch out/.nojekyll          — disable Jekyll processing
-  └── actions/upload-pages-artifact — upload the out/ directory
-     │
-     ▼
-GitHub Actions: deploy job
-  └── actions/deploy-pages@v4      — publish to GitHub Pages
-```
-
-The `next.config.ts` automatically detects the GitHub Actions environment and sets the correct `basePath` (`/OnlinePortfolio`) so all assets, links, and routes work correctly under the subdirectory URL.
+After the initial setup, every `git push origin main` automatically rebuilds and deploys. No manual steps needed.
 
 ---
 
-## Local Preview of the Production Build
+## Changing the repository name
 
-To preview exactly what GitHub Pages will serve:
+If you rename your repo, update `package.json` → `build:gh` script:
+
+```json
+"build:gh": "GITHUB_ACTIONS=true GITHUB_REPOSITORY=MrinalA2009/NewRepoName next build"
+```
+
+The `next.config.ts` auto-reads `GITHUB_REPOSITORY` from the Actions environment to set the correct basePath — no other changes needed.
+
+---
+
+## Local preview of production build
 
 ```bash
 cd portfolio
 
-# Build with the GitHub Pages basePath applied
+# Build with GitHub Pages basePath applied
 npm run build:gh
 
 # Serve the static output
 npm run preview
 ```
 
-Then open **http://localhost:3000/OnlinePortfolio/** — this matches the deployed URL structure.
+Open **http://localhost:3000/OnlinePortfolio/**
 
 ---
 
-## Changing the Repository Name
+## Available scripts
 
-If you rename your GitHub repo or push to a different account, you only need to update two lines:
-
-**1. `portfolio/package.json`** — update the `build:gh` script:
-```json
-"build:gh": "GITHUB_ACTIONS=true GITHUB_REPOSITORY=YourUsername/YourRepoName next build"
-```
-
-**2. The live URL comment** in `.github/workflows/deploy.yml`:
-```
-# Deployed URL: https://yourusername.github.io/YourRepoName/
-```
-
-The `next.config.ts` reads `GITHUB_REPOSITORY` automatically from the environment — no other changes needed.
+| Command | Description |
+|---|---|
+| `npm run dev` | Local dev server at localhost:3000 |
+| `npm run build` | Production build (no basePath, for local use) |
+| `npm run build:gh` | Production build with GitHub Pages basePath |
+| `npm run preview` | Serve `out/` statically for local preview |
+| `npm run lint` | Run ESLint |
 
 ---
 
-## Project Structure
+## Project structure
 
 ```
 OnlinePortfolio/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml          ← GitHub Actions CI/CD
-└── portfolio/                  ← Next.js application root
+├── .github/workflows/deploy.yml   ← GitHub Actions CI/CD
+└── portfolio/                     ← Next.js app
     ├── src/
     │   ├── app/
     │   │   ├── layout.tsx
-    │   │   ├── page.tsx        ← Home
+    │   │   ├── page.tsx            ← Home
     │   │   ├── about/page.tsx
     │   │   ├── resume/page.tsx
     │   │   ├── projects/page.tsx
@@ -158,14 +131,13 @@ OnlinePortfolio/
     │       ├── ParticleBackground.tsx
     │       ├── StatCounter.tsx
     │       └── CursorGlow.tsx
-    ├── next.config.ts          ← Static export + basePath config
-    ├── package.json
-    └── tailwind.config.ts
+    ├── next.config.ts              ← Static export + basePath config
+    └── package.json
 ```
 
 ---
 
-## Tech Stack
+## Tech stack
 
 | Technology | Purpose |
 |---|---|
@@ -174,16 +146,4 @@ OnlinePortfolio/
 | Framer Motion | Animations and transitions |
 | TypeScript | Type safety |
 | GitHub Actions | CI/CD pipeline |
-| GitHub Pages | Static hosting |
-
----
-
-## Available Scripts
-
-| Command | Description |
-|---|---|
-| `npm run dev` | Start local dev server at `localhost:3000` |
-| `npm run build` | Build for production (local, no basePath) |
-| `npm run build:gh` | Build with GitHub Pages basePath applied |
-| `npm run preview` | Serve `out/` directory for local static preview |
-| `npm run lint` | Run ESLint |
+| GitHub Pages | Static hosting (gh-pages branch) |

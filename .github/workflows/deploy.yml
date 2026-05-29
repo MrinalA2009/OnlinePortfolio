@@ -1,7 +1,8 @@
 # ─────────────────────────────────────────────────────────────
 #  Mrinal Agarwal Portfolio — GitHub Pages Deployment
-#  Triggers automatically on every push to `main`.
-#  Deployed URL: https://mrinala2009.github.io/OnlinePortfolio/
+#  Triggers on every push to main, or manually from Actions tab.
+#  Deploys to the gh-pages branch → GitHub Pages serves it.
+#  Live URL: https://mrinala2009.github.io/OnlinePortfolio/
 # ─────────────────────────────────────────────────────────────
 
 name: Deploy Portfolio to GitHub Pages
@@ -10,28 +11,22 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:          # Allow manual trigger from Actions tab
+  workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Only allow one concurrent deployment; queue rather than cancel in-progress.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  contents: write   # required to push to gh-pages branch
 
 jobs:
-  # ── JOB 1: Build ──────────────────────────────────────────
-  build:
-    name: Build Static Site
+  build-and-deploy:
+    name: Build & Deploy
     runs-on: ubuntu-latest
 
     steps:
+      # 1 — Check out source
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2 — Set up Node 20 with npm cache
       - name: Set up Node.js 20
         uses: actions/setup-node@v4
         with:
@@ -39,37 +34,28 @@ jobs:
           cache: "npm"
           cache-dependency-path: portfolio/package-lock.json
 
+      # 3 — Install dependencies (uses lockfile for reproducible builds)
       - name: Install dependencies
         working-directory: ./portfolio
         run: npm ci
 
+      # 4 — Build static export
+      #     GITHUB_ACTIONS=true and GITHUB_REPOSITORY are set automatically.
+      #     next.config.ts reads them to apply basePath=/OnlinePortfolio.
       - name: Build Next.js static export
         working-directory: ./portfolio
         run: npm run build
-        # GITHUB_ACTIONS and GITHUB_REPOSITORY are set automatically
-        # by the runner — next.config.ts reads them to set basePath.
 
-      - name: Add .nojekyll (prevent GitHub Jekyll processing)
+      # 5 — Prevent GitHub from processing _next/ with Jekyll
+      - name: Add .nojekyll
         run: touch ./portfolio/out/.nojekyll
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload static export artifact
-        uses: actions/upload-pages-artifact@v3
+      # 6 — Push ./portfolio/out to gh-pages branch
+      - name: Deploy to GitHub Pages (gh-pages branch)
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: ./portfolio/out
-
-  # ── JOB 2: Deploy ─────────────────────────────────────────
-  deploy:
-    name: Deploy to GitHub Pages
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./portfolio/out
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_message: "Deploy portfolio — ${{ github.sha }}"
