@@ -8,7 +8,7 @@ const highlights = [
   {
     emoji: "🔬",
     title: "NeurIPS Spotlight",
-    desc: "Top 0.1% among 400+ PhD researchers. Research cited by UPenn, Microsoft & MBZUAI.",
+    desc: "Papers spotlighted among 400+ researchers and PhD professionals. Cited by UPenn, Microsoft & MBZUAI.",
   },
   {
     emoji: "🏆",
@@ -167,7 +167,7 @@ export default function Home() {
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <StatCounter end={2} prefix="#" label="In Nation — Debate" description="Public Forum, 2025" />
-              <StatCounter end={400} suffix="+" label="PhD Peers Surpassed" description="NeurIPS submission pool" />
+              <StatCounter end={400} suffix="+" label="Researchers in Peer Pool" description="NeurIPS & IJCNLP-AACL spotlight" />
               <StatCounter end={550} suffix="+" label="Tutoring Hours" description="Across 3 programs" />
               <StatCounter end={80} suffix="+" label="Math Club Members" description="EHS Math Club President" />
             </div>
