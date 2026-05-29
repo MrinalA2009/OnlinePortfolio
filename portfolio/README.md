@@ -18,80 +18,60 @@ Open **http://localhost:3000**
 
 ---
 
-## Deploy to GitHub Pages — Complete Guide
+## Deploying to GitHub Pages
 
-### How it works
+### One-time setup (already done)
 
-Every push to `main` runs a GitHub Actions workflow that:
-1. Builds the site as a static export (`out/` directory)
-2. Pushes the output to the `gh-pages` branch
-3. GitHub Pages serves the `gh-pages` branch publicly
+GitHub Pages source is set to **"GitHub Actions"** in your repo settings.
 
----
+### How to deploy
 
-### Step-by-step deployment
-
-**Step 1 — Push the code to GitHub**
+Just push to `main` — the workflow runs automatically:
 
 ```bash
-# From the repo root (OnlinePortfolio/)
 git add .
-git commit -m "Deploy portfolio"
+git commit -m "your message"
 git push origin main
 ```
 
-**Step 2 — Wait for the workflow to run (~2 minutes)**
-
-Go to your repo on GitHub → **Actions** tab.
-You should see "Deploy Portfolio to GitHub Pages" running.
-Wait for it to show a green checkmark ✅.
-
-This creates a `gh-pages` branch in your repo automatically.
-
-**Step 3 — Enable GitHub Pages (one time only)**
-
-1. Go to your repo → **Settings** → **Pages** (left sidebar)
-2. Under **"Build and deployment"**:
-   - **Source:** `Deploy from a branch`
-   - **Branch:** `gh-pages` → `/ (root)`
-3. Click **Save**
-
-Wait ~1 minute. Your site will be live at:
+Then go to the **Actions** tab on GitHub, wait for the green ✅, and visit:
 
 ```
 https://mrinala2009.github.io/OnlinePortfolio/
 ```
 
----
+### Manual trigger
 
-### Re-deploying
-
-After the initial setup, every `git push origin main` automatically rebuilds and deploys. No manual steps needed.
+Actions tab → **Deploy Next.js site to Pages** → **Run workflow**
 
 ---
 
-## Changing the repository name
+## How it works
 
-If you rename your repo, update `package.json` → `build:gh` script:
-
-```json
-"build:gh": "GITHUB_ACTIONS=true GITHUB_REPOSITORY=MrinalA2009/NewRepoName next build"
+```
+Push to main
+     │
+     ▼
+GitHub Actions (.github/workflows/nextjs.yml)
+  ├── npm ci              (install from portfolio/package-lock.json)
+  ├── npm run build       (Next.js static export → portfolio/out/)
+  ├── touch .nojekyll     (prevents Jekyll from ignoring _next/ assets)
+  └── upload-pages-artifact + deploy-pages
+     │
+     ▼
+https://mrinala2009.github.io/OnlinePortfolio/
 ```
 
-The `next.config.ts` auto-reads `GITHUB_REPOSITORY` from the Actions environment to set the correct basePath — no other changes needed.
+`next.config.ts` auto-detects `GITHUB_ACTIONS=true` and reads `GITHUB_REPOSITORY` to set `basePath=/OnlinePortfolio` — links and assets work correctly under the subdirectory path.
 
 ---
 
-## Local preview of production build
+## Local preview of the production build
 
 ```bash
 cd portfolio
-
-# Build with GitHub Pages basePath applied
-npm run build:gh
-
-# Serve the static output
-npm run preview
+npm run build:gh     # build with GitHub Pages basePath
+npm run preview      # serve out/ at localhost:3000
 ```
 
 Open **http://localhost:3000/OnlinePortfolio/**
@@ -103,9 +83,9 @@ Open **http://localhost:3000/OnlinePortfolio/**
 | Command | Description |
 |---|---|
 | `npm run dev` | Local dev server at localhost:3000 |
-| `npm run build` | Production build (no basePath, for local use) |
-| `npm run build:gh` | Production build with GitHub Pages basePath |
-| `npm run preview` | Serve `out/` statically for local preview |
+| `npm run build` | Build without basePath (local use) |
+| `npm run build:gh` | Build with GitHub Pages basePath applied |
+| `npm run preview` | Serve `out/` statically |
 | `npm run lint` | Run ESLint |
 
 ---
@@ -114,7 +94,7 @@ Open **http://localhost:3000/OnlinePortfolio/**
 
 ```
 OnlinePortfolio/
-├── .github/workflows/deploy.yml   ← GitHub Actions CI/CD
+├── .github/workflows/nextjs.yml   ← GitHub Actions CI/CD
 └── portfolio/                     ← Next.js app
     ├── src/
     │   ├── app/
@@ -131,19 +111,6 @@ OnlinePortfolio/
     │       ├── ParticleBackground.tsx
     │       ├── StatCounter.tsx
     │       └── CursorGlow.tsx
-    ├── next.config.ts              ← Static export + basePath config
+    ├── next.config.ts              ← output: export, auto basePath
     └── package.json
 ```
-
----
-
-## Tech stack
-
-| Technology | Purpose |
-|---|---|
-| Next.js 16 (App Router) | Framework, routing, static export |
-| Tailwind CSS v4 | Utility-first styling |
-| Framer Motion | Animations and transitions |
-| TypeScript | Type safety |
-| GitHub Actions | CI/CD pipeline |
-| GitHub Pages | Static hosting (gh-pages branch) |
