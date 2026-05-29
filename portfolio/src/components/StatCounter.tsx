@@ -11,7 +11,9 @@ interface Props {
   description?: string;
 }
 
-export default function StatCounter({ end, suffix = "", prefix = "", duration = 2000, label, description }: Props) {
+export default function StatCounter({
+  end, suffix = "", prefix = "", duration = 1800, label, description,
+}: Props) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
   const [count, setCount] = useState(0);
@@ -30,11 +32,11 @@ export default function StatCounter({ end, suffix = "", prefix = "", duration = 
 
   return (
     <div ref={ref} className="text-center">
-      <div className="text-4xl md:text-5xl font-bold gradient-text mb-2">
+      <div className="stat-num mb-1">
         {prefix}{count.toLocaleString()}{suffix}
       </div>
-      <div className="text-sm font-semibold text-white/80 mb-1">{label}</div>
-      {description && <div className="text-xs text-slate-500 max-w-32 mx-auto">{description}</div>}
+      <div className="text-sm font-medium mb-0.5" style={{ color: "var(--text-1)" }}>{label}</div>
+      {description && <div className="body-sm">{description}</div>}
     </div>
   );
 }

@@ -17,16 +17,16 @@ export default function AnimatedSection({
 }: Props) {
   const initial = {
     opacity: 0,
-    y: direction === "up" ? 40 : direction === "down" ? -40 : 0,
-    x: direction === "left" ? 40 : direction === "right" ? -40 : 0,
+    y: direction === "up" ? 20 : direction === "down" ? -20 : 0,
+    x: direction === "left" ? 20 : direction === "right" ? -20 : 0,
   };
 
   return (
     <motion.div
       initial={initial}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       {children}

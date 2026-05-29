@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -18,109 +19,125 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
   return (
     <motion.header
-      initial={{ y: -80, opacity: 0 }}
+      initial={{ y: -64, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "glass-strong shadow-[0_2px_40px_rgba(0,0,0,0.4)]"
-          : "bg-transparent"
-      }`}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        background: scrolled ? "var(--surface)" : "transparent",
+        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
+        boxShadow: scrolled ? "var(--shadow-sm)" : "none",
+      }}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
+      <div className="max-w-6xl mx-auto px-5 flex items-center justify-between h-14">
+
         {/* Logo */}
-        <Link href="/" className="group flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-blue-500/30 group-hover:shadow-blue-500/50 transition-all duration-300">
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div
+            className="w-7 h-7 rounded-md flex items-center justify-center text-xs font-bold transition-transform duration-200 group-hover:scale-105"
+            style={{ background: "var(--accent)", color: "var(--accent-fg)" }}
+          >
             M
           </div>
-          <span className="font-semibold text-white/90 group-hover:text-white transition-colors text-sm tracking-wide">
+          <span className="text-sm font-semibold" style={{ color: "var(--text-1)" }}>
             Mrinal Agarwal
           </span>
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const active = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
-                  isActive
-                    ? "text-white"
-                    : "text-slate-400 hover:text-white hover:bg-white/5"
-                }`}
+                className="relative px-3 py-1.5 text-sm rounded-md transition-colors duration-150"
+                style={{
+                  color: active ? "var(--text-1)" : "var(--text-2)",
+                  fontWeight: active ? "500" : "400",
+                }}
               >
-                {isActive && (
+                {link.label}
+                {active && (
                   <motion.span
-                    layoutId="nav-pill"
-                    className="absolute inset-0 rounded-lg bg-white/8 border border-blue-500/20"
-                    transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                    layoutId="nav-indicator"
+                    className="absolute inset-0 rounded-md"
+                    style={{ background: "var(--bg-subtle)" }}
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 )}
-                <span className="relative z-10">{link.label}</span>
+                <span className="relative z-10">{null}</span>
               </Link>
             );
           })}
         </nav>
 
-        {/* CTA */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link
-            href="/contact"
-            className="px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400 transition-all duration-200 shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35"
-          >
+        {/* Right side */}
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Link href="/contact" className="hidden md:inline-flex btn btn-primary text-sm">
             Get in Touch
           </Link>
-        </div>
 
-        {/* Hamburger */}
-        <button
-          className="md:hidden p-2 text-slate-400 hover:text-white"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          <div className="w-5 flex flex-col gap-1">
-            <span className={`block h-0.5 bg-current transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-1.5" : ""}`} />
-            <span className={`block h-0.5 bg-current transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
-            <span className={`block h-0.5 bg-current transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-1.5" : ""}`} />
-          </div>
-        </button>
+          {/* Hamburger */}
+          <button
+            className="md:hidden w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
+            style={{ background: "var(--bg-subtle)", border: "1px solid var(--border)", color: "var(--text-2)" }}
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            <div className="w-4 flex flex-col gap-[4px]">
+              <span className={`block h-[1.5px] rounded-full bg-current transition-all duration-250 ${mobileOpen ? "rotate-45 translate-y-[5.5px]" : ""}`} />
+              <span className={`block h-[1.5px] rounded-full bg-current transition-all duration-250 ${mobileOpen ? "opacity-0" : ""}`} />
+              <span className={`block h-[1.5px] rounded-full bg-current transition-all duration-250 ${mobileOpen ? "-rotate-45 -translate-y-[5.5px]" : ""}`} />
+            </div>
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden glass-strong border-t border-blue-500/10 overflow-hidden"
+            transition={{ duration: 0.22 }}
+            className="md:hidden overflow-hidden"
+            style={{ background: "var(--surface)", borderTop: "1px solid var(--border)" }}
           >
-            <div className="px-6 py-4 flex flex-col gap-2">
+            <div className="px-5 py-4 flex flex-col gap-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
-                    pathname === link.href
-                      ? "text-white bg-white/8 border border-blue-500/20"
-                      : "text-slate-400 hover:text-white hover:bg-white/5"
-                  }`}
+                  className="px-3 py-2.5 text-sm rounded-lg transition-colors"
+                  style={{
+                    color: pathname === link.href ? "var(--text-1)" : "var(--text-2)",
+                    background: pathname === link.href ? "var(--bg-subtle)" : "transparent",
+                    fontWeight: pathname === link.href ? "500" : "400",
+                  }}
                 >
                   {link.label}
                 </Link>
               ))}
+              <div className="pt-2 mt-1" style={{ borderTop: "1px solid var(--border)" }}>
+                <Link href="/contact" className="btn btn-primary w-full justify-center">
+                  Get in Touch
+                </Link>
+              </div>
             </div>
           </motion.div>
         )}
