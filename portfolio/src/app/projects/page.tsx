@@ -48,7 +48,7 @@ const projects: Project[] = [
     technologies: ["Python", "GPT-4 API", "LangChain", "PyTorch", "Statistical Analysis", "LaTeX"],
     links: [
       { label: "GitHub", href: "https://github.com/MrinalA2009/WOLF-Werewolf-based-Observations-for-LLM-Deception-and-Falsehoods", icon: "github" },
-      { label: "arXiv Paper", href: "#", icon: "paper" },
+      { label: "arXiv Paper", href: "https://arxiv.org/abs/2512.09187", icon: "paper" },
     ],
     accentColor: "#2563EB",
     diagram: [
@@ -79,7 +79,7 @@ const projects: Project[] = [
     technologies: ["Python", "PyTorch", "HuggingFace", "Embedding Analysis", "Statistical Methods", "LaTeX"],
     authors: ["Anirudh Shekhar", "Mrinal Agarwal"],
     links: [
-      { label: "arXiv Paper", href: "#", icon: "paper" },
+      { label: "arXiv Paper", href: "https://arxiv.org/abs/2601.12359", icon: "paper" },
     ],
     accentColor: "#059669",
     diagram: [
@@ -418,8 +418,8 @@ export default function ProjectsPage() {
               <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
             </svg>
             <p className="body-sm">
-              <strong style={{ color: "var(--text-1)" }}>Note on research papers:</strong> WOLF and ZEDD are published research papers
-              co-authored with academic collaborators. arXiv links will be updated upon public release. Click any project card to explore the full technical detail.
+              <strong style={{ color: "var(--text-1)" }}>Note on research papers:</strong> WOLF and ZEDD are peer-reviewed publications
+              co-authored with academic collaborators. Click any project card to explore full technical detail, or open the arXiv links directly.
             </p>
           </div>
         </AnimatedSection>
