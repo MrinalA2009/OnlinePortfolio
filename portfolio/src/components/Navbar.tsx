@@ -4,29 +4,20 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
-
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/resume", label: "Resume" },
-  { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
-];
+import { navLinks } from "@/lib/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const closeMobileMenu = () => setMobileOpen(false);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
 
   return (
     <motion.header
@@ -122,6 +113,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  onClick={closeMobileMenu}
                   className="px-3 py-2.5 text-sm rounded-lg transition-colors"
                   style={{
                     color: pathname === link.href ? "var(--text-1)" : "var(--text-2)",
@@ -133,7 +125,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="pt-2 mt-1" style={{ borderTop: "1px solid var(--border)" }}>
-                <Link href="/contact" className="btn btn-primary w-full justify-center">
+                <Link href="/contact" onClick={closeMobileMenu} className="btn btn-primary w-full justify-center">
                   Get in Touch
                 </Link>
               </div>

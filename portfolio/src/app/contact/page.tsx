@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import AnimatedSection from "@/components/AnimatedSection";
+import PageShell from "@/components/PageShell";
 
 const inquiryTypes = [
   "Research Collaboration",
@@ -26,8 +27,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div style={{ background: "var(--bg-base)" }} className="pt-24 pb-20">
-      <div className="max-w-5xl mx-auto px-5">
+    <PageShell>
 
         {/* Header */}
         <AnimatedSection className="mb-14">
@@ -92,7 +92,7 @@ export default function ContactPage() {
 
             <AnimatedSection direction="right" delay={0.08}>
               <div className="card p-7" style={{ boxShadow: "var(--shadow-sm)" }}>
-                <h3 className="heading-md text-sm mb-4">Open To</h3>
+                <h3 className="heading-md mb-4">Open To</h3>
                 <ul className="space-y-2.5">
                   {[
                     "AI Safety & ML Research Collaborations",
@@ -228,8 +228,7 @@ export default function ContactPage() {
             </AnimatedSection>
           </div>
         </div>
-      </div>
-    </div>
+    </PageShell>
   );
 }
 

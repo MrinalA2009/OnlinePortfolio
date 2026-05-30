@@ -20,9 +20,6 @@ export const metadata: Metadata = {
   description:
     "Portfolio of Mrinal Agarwal — NeurIPS spotlighted AI researcher, nationally ranked Public Forum debater, AIME qualifier, and builder of DebateSim and MathSim.",
   authors: [{ name: "Mrinal Agarwal" }],
-  icons: {
-    icon: "/icon.svg",
-  },
 };
 
 // Light mode is the default. Stored user preference takes precedence.

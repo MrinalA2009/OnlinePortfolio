@@ -4,6 +4,7 @@ import { useState } from "react";
 import AnimatedSection from "@/components/AnimatedSection";
 import StatCounter from "@/components/StatCounter";
 import SectionNav from "@/components/SectionNav";
+import PageShell from "@/components/PageShell";
 import Link from "next/link";
 
 type Category = "All" | "Research" | "Mathematics" | "Debate" | "Development" | "Leadership";
@@ -165,10 +166,10 @@ export default function AboutPage() {
   };
 
   return (
-    <div style={{ background: "var(--bg-base)" }} className="pt-24 pb-20">
+    <PageShell>
       <SectionNav sections={NAV_SECTIONS} />
 
-      <div className="max-w-5xl mx-auto px-5">
+      <div>
 
         {/* ── HEADER ── */}
         <section id="about-hero">
@@ -470,7 +471,7 @@ export default function AboutPage() {
           </div>
         </AnimatedSection>
       </div>
-    </div>
+    </PageShell>
   );
 }
 

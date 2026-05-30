@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import AnimatedSection from "@/components/AnimatedSection";
+import PageShell from "@/components/PageShell";
 
 const extracurriculars = [
   {
@@ -124,26 +125,12 @@ const softSkills = ["Leadership", "Public Speaking", "Critical Thinking", "Mathe
 
 export default function ResumePage() {
   return (
-    <div style={{ background: "var(--bg-base)" }} className="pt-24 pb-20">
-      <div className="max-w-4xl mx-auto px-5">
-
+    <PageShell maxWidth="4xl">
         {/* Header */}
         <AnimatedSection className="mb-10">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5">
-            <div>
-              <p className="label mb-2">Curriculum Vitae</p>
-              <h1 className="heading-display">Resume</h1>
-            </div>
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="btn btn-primary self-start sm:self-auto"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-              </svg>
-              Download PDF
-            </motion.button>
+          <div>
+            <p className="label mb-2">Curriculum Vitae</p>
+            <h1 className="heading-display">Resume</h1>
           </div>
         </AnimatedSection>
 
@@ -246,8 +233,7 @@ export default function ResumePage() {
           </ResumeSection>
         </AnimatedSection>
 
-      </div>
-    </div>
+    </PageShell>
   );
 }
 
