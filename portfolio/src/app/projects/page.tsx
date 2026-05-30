@@ -291,13 +291,13 @@ export default function ProjectsPage() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="fixed inset-0 z-40"
+              className="fixed inset-0 z-[60]"
               style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)" }}
               onClick={() => setSelected(null)}
             />
 
             {/* Expanded card — shares layoutId with the grid card */}
-            <div className="fixed inset-0 z-50 flex items-start justify-center p-4 md:p-10 pointer-events-none overflow-auto">
+            <div className="fixed inset-0 z-[70] flex items-start justify-center p-4 md:p-10 pointer-events-none overflow-auto">
               <motion.div
                 layoutId={`project-${selected}`}
                 className="pointer-events-auto w-full max-w-3xl"

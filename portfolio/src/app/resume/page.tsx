@@ -246,23 +246,6 @@ export default function ResumePage() {
           </ResumeSection>
         </AnimatedSection>
 
-        {/* Download CTA */}
-        <AnimatedSection>
-          <div className="card p-10 text-center" style={{ boxShadow: "var(--shadow-sm)" }}>
-            <h3 className="heading-md mb-2">Want a printable version?</h3>
-            <p className="body-sm mb-6">Download the complete resume as a formatted PDF.</p>
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="btn btn-primary px-6 py-2.5 mx-auto"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-              </svg>
-              Download Full Resume (PDF)
-            </motion.button>
-          </div>
-        </AnimatedSection>
       </div>
     </div>
   );

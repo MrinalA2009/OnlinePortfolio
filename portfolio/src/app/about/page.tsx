@@ -178,7 +178,7 @@ export default function AboutPage() {
               About <span className="gradient-text">Mrinal</span>
             </h1>
             <p className="body-lg max-w-xl">
-              AI researcher, mathematician, debater, and developer. Every project, paper, and competition is part of a larger story about building things that matter.
+              AI researcher, mathematician, debater, and developer.
             </p>
           </AnimatedSection>
 
@@ -294,99 +294,121 @@ export default function AboutPage() {
 
           {/* Timeline */}
           <div className="relative">
-            {/* Vertical spine — desktop */}
-            <div
-              className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px"
-              style={{ background: "var(--border)", transform: "translateX(-50%)" }}
-            />
+            {/* Desktop zigzag */}
+            <div className="hidden md:block relative">
+              <div
+                className="absolute left-1/2 top-0 bottom-0 w-px"
+                style={{ background: "var(--border)", transform: "translateX(-50%)" }}
+              />
 
-            <motion.div layout className="space-y-6">
-              <AnimatePresence mode="popLayout">
-                {filtered.map((item, i) => {
-                  const id = `${item.year}-${item.title}`;
-                  const isFocused = focusedId === id;
-                  const isLeft = i % 2 === 0;
-                  const isAnyFocused = focusedId !== null;
+              <motion.div layout className="space-y-6">
+                <AnimatePresence mode="popLayout">
+                  {filtered.map((item, i) => {
+                    const id = `${item.year}-${item.title}`;
+                    const isFocused = focusedId === id;
+                    const isLeft = i % 2 === 0;
+                    const isAnyFocused = focusedId !== null;
 
-                  return (
-                    <motion.div
-                      key={id}
-                      layout
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{
-                        opacity: isAnyFocused && !isFocused ? 0.45 : 1,
-                        y: 0,
-                        scale: isFocused ? 1 : isAnyFocused ? 0.99 : 1,
-                      }}
-                      exit={{ opacity: 0, y: -10, scale: 0.97 }}
-                      transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                      className="relative flex flex-col md:flex-row items-start gap-0"
-                      onClick={() => handleFocus(id)}
-                    >
-                      {/* LEFT SLOT */}
-                      <div className="w-full md:w-[calc(50%-30px)] md:pr-8">
-                        {isLeft && (
-                          <MilestoneCard
-                            item={item}
-                            isFocused={isFocused}
-                            align="right"
-                          />
-                        )}
-                      </div>
+                    return (
+                      <motion.div
+                        key={id}
+                        layout
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{
+                          opacity: isAnyFocused && !isFocused ? 0.45 : 1,
+                          y: 0,
+                          scale: isFocused ? 1 : isAnyFocused ? 0.99 : 1,
+                        }}
+                        exit={{ opacity: 0, y: -10, scale: 0.97 }}
+                        transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                        className="relative flex flex-row items-start gap-0"
+                        onClick={() => handleFocus(id)}
+                      >
+                        <div className="w-[calc(50%-30px)] pr-8">
+                          {isLeft && (
+                            <MilestoneCard item={item} isFocused={isFocused} accentSide="right" />
+                          )}
+                        </div>
 
-                      {/* CENTER DOT */}
-                      <div className="hidden md:flex w-[60px] justify-center items-start pt-6 flex-shrink-0 relative z-10">
-                        <motion.div
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: "spring", stiffness: 380, damping: 24, delay: i * 0.05 }}
-                          className={item.latest ? "tl-dot-pulse" : ""}
-                          style={{
-                            width: isFocused ? 18 : 13,
-                            height: isFocused ? 18 : 13,
-                            borderRadius: "50%",
-                            background: item.color,
-                            border: `3px solid var(--surface)`,
-                            boxShadow: isFocused ? `0 0 0 3px ${item.color}` : `0 0 0 2px ${item.color}50`,
-                            transition: "width 0.25s, height 0.25s, box-shadow 0.25s",
-                            flexShrink: 0,
-                          }}
-                        />
-                      </div>
+                        <div className="w-[60px] flex justify-center items-start pt-6 flex-shrink-0 relative z-10">
+                          <TimelineDot item={item} isFocused={isFocused} index={i} />
+                        </div>
 
-                      {/* RIGHT SLOT */}
-                      <div className="w-full md:w-[calc(50%-30px)] md:pl-8">
-                        {!isLeft && (
-                          <MilestoneCard
-                            item={item}
-                            isFocused={isFocused}
-                            align="left"
-                          />
-                        )}
-                        {/* Mobile: all go to right of dot */}
-                        {isLeft && (
-                          <div className="md:hidden" />
-                        )}
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
+                        <div className="w-[calc(50%-30px)] pl-8">
+                          {!isLeft && (
+                            <MilestoneCard item={item} isFocused={isFocused} accentSide="left" />
+                          )}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
 
-              {filtered.length === 0 && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center py-16 body-md"
-                  style={{ color: "var(--text-3)" }}
-                >
-                  No milestones in this category yet.
-                </motion.div>
-              )}
-            </motion.div>
+                {filtered.length === 0 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-center py-16 body-md"
+                    style={{ color: "var(--text-3)" }}
+                  >
+                    No milestones in this category yet.
+                  </motion.div>
+                )}
+              </motion.div>
+            </div>
 
-            {/* Mobile column */}
-            <div className="md:hidden absolute left-2 top-0 bottom-0 w-px" style={{ background: "var(--border)" }} />
+            {/* Mobile — single column with dots on the left */}
+            <div className="md:hidden relative">
+              <div
+                className="absolute left-[7px] top-0 bottom-0 w-px"
+                style={{ background: "var(--border)" }}
+              />
+
+              <motion.div layout className="space-y-6">
+                <AnimatePresence mode="popLayout">
+                  {filtered.map((item, i) => {
+                    const id = `${item.year}-${item.title}`;
+                    const isFocused = focusedId === id;
+                    const isAnyFocused = focusedId !== null;
+
+                    return (
+                      <motion.div
+                        key={id}
+                        layout
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{
+                          opacity: isAnyFocused && !isFocused ? 0.45 : 1,
+                          y: 0,
+                          scale: isFocused ? 1 : isAnyFocused ? 0.99 : 1,
+                        }}
+                        exit={{ opacity: 0, y: -10, scale: 0.97 }}
+                        transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                        className="relative flex gap-3 items-start"
+                        onClick={() => handleFocus(id)}
+                      >
+                        <div className="flex-shrink-0 w-[15px] flex justify-center pt-6 relative z-10">
+                          <TimelineDot item={item} isFocused={isFocused} index={i} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <MilestoneCard item={item} isFocused={isFocused} accentSide="left" />
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
+
+                {filtered.length === 0 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-center py-16 body-md"
+                    style={{ color: "var(--text-3)" }}
+                  >
+                    No milestones in this category yet.
+                  </motion.div>
+                )}
+              </motion.div>
+            </div>
           </div>
 
           {/* Hint */}
@@ -452,31 +474,49 @@ export default function AboutPage() {
   );
 }
 
-function MilestoneCard({ item, isFocused, align }: {
+function TimelineDot({ item, isFocused, index }: { item: Milestone; isFocused: boolean; index: number }) {
+  return (
+    <motion.div
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ type: "spring", stiffness: 380, damping: 24, delay: index * 0.05 }}
+      className={item.latest ? "tl-dot-pulse" : ""}
+      style={{
+        width: isFocused ? 18 : 13,
+        height: isFocused ? 18 : 13,
+        borderRadius: "50%",
+        background: item.color,
+        border: "3px solid var(--surface)",
+        boxShadow: isFocused ? `0 0 0 3px ${item.color}` : `0 0 0 2px ${item.color}50`,
+        transition: "width 0.25s, height 0.25s, box-shadow 0.25s",
+        flexShrink: 0,
+      }}
+    />
+  );
+}
+
+function MilestoneCard({ item, isFocused, accentSide }: {
   item: Milestone;
   isFocused: boolean;
-  align: "left" | "right";
+  accentSide: "left" | "right";
 }) {
   return (
     <motion.div
       layout
       whileHover={!isFocused ? { y: -2 } : {}}
-      className="card cursor-pointer select-none mb-0"
+      className="card cursor-pointer select-none mb-0 text-left"
       style={{
         boxShadow: isFocused ? "var(--shadow-md)" : "var(--shadow-sm)",
         borderColor: isFocused ? `${item.color}50` : "var(--border)",
-        borderLeftWidth: isFocused && align === "left" ? 3 : 1,
-        borderRightWidth: isFocused && align === "right" ? 3 : 1,
-        borderLeftColor: isFocused && align === "left" ? item.color : undefined,
-        borderRightColor: isFocused && align === "right" ? item.color : undefined,
+        borderLeftWidth: isFocused && accentSide === "left" ? 3 : 1,
+        borderRightWidth: isFocused && accentSide === "right" ? 3 : 1,
+        borderLeftColor: isFocused && accentSide === "left" ? item.color : undefined,
+        borderRightColor: isFocused && accentSide === "right" ? item.color : undefined,
         transition: "border-color 0.25s, box-shadow 0.25s",
-        textAlign: align,
       }}
     >
       <div className="p-5">
-        <div
-          className={`flex items-center gap-2 mb-2 ${align === "right" ? "justify-end flex-row-reverse md:flex-row" : "justify-start"}`}
-        >
+        <div className="flex items-center gap-2 mb-2 justify-start">
           <span
             className="text-xs font-bold px-2 py-0.5 rounded"
             style={{ background: `${item.color}15`, color: item.color }}
@@ -515,16 +555,16 @@ function MilestoneCard({ item, isFocused, align }: {
               <div className="mt-4 pt-4" style={{ borderTop: `1px solid ${item.color}20` }}>
                 <p className="body-sm leading-relaxed mb-4">{item.desc}</p>
                 {item.achievements && (
-                  <ul className={`space-y-1.5 mb-4 ${align === "right" ? "text-right" : "text-left"}`}>
+                  <ul className="space-y-1.5 mb-4 text-left">
                     {item.achievements.map((a) => (
-                      <li key={a} className={`body-sm flex items-center gap-2 ${align === "right" ? "flex-row-reverse" : ""}`}>
+                      <li key={a} className="body-sm flex items-center gap-2">
                         <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: item.color }} />
                         {a}
                       </li>
                     ))}
                   </ul>
                 )}
-                <div className={`flex flex-wrap gap-1.5 ${align === "right" ? "justify-end" : "justify-start"}`}>
+                <div className="flex flex-wrap gap-1.5 justify-start">
                   {item.tags.map((tag) => (
                     <span key={tag} className="tag" style={{ borderColor: `${item.color}25`, color: item.color, background: `${item.color}08` }}>
                       {tag}
@@ -539,7 +579,7 @@ function MilestoneCard({ item, isFocused, align }: {
         {/* Expand hint */}
         {!isFocused && (
           <div
-            className={`mt-2 flex items-center gap-1 text-xs ${align === "right" ? "justify-end" : "justify-start"}`}
+            className="mt-2 flex items-center gap-1 text-xs justify-start"
             style={{ color: "var(--text-3)" }}
           >
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
