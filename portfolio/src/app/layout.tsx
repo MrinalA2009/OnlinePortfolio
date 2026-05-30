@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/lib/ThemeProvider";
 export const metadata: Metadata = {
   title: "Mrinal Agarwal — AI Researcher, Mathematician & Developer",
   description:
-    "Portfolio of Mrinal Agarwal — NeurIPS spotlighted AI researcher, nationally ranked debater, AMC/AIME mathematician, and builder of DebateSim and MathSim.",
+    "Portfolio of Mrinal Agarwal — NeurIPS spotlighted AI researcher, nationally ranked debater, AIME qualifier, and builder of DebateSim and MathSim.",
   authors: [{ name: "Mrinal Agarwal" }],
 };
 
