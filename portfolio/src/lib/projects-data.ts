@@ -1,14 +1,6 @@
 export type LinkItem = { label: string; href: string; icon: "globe" | "github" | "paper" };
 
-export type ProjectImage = {
-  src: string;
-  alt: string;
-  caption?: string;
-  /** Shown in placeholder when file is missing */
-  placeholderHint: string;
-};
-
-export type ProjectData = {
+export type Project = {
   id: string;
   type: "Research" | "Platform";
   title: string;
@@ -26,20 +18,10 @@ export type ProjectData = {
   links: LinkItem[];
   accentColor: string;
   venue?: string;
-  /** Alternate image left / text right on desktop */
-  imageOnLeft: boolean;
-  hero: ProjectImage;
-  gallery: ProjectImage[];
-  researchVisuals?: ProjectImage[];
-  mockup?: {
-    title: string;
-    images: ProjectImage[];
-    browserStyle?: boolean;
-  };
   diagram: string[];
 };
 
-export const projects: ProjectData[] = [
+export const projects: Project[] = [
   {
     id: "wolf",
     type: "Research",
@@ -49,15 +31,15 @@ export const projects: ProjectData[] = [
     statusDot: "#2563EB",
     tagline: "Multi-agent LLM deception research",
     brief:
-      "A naturalistic framework for evaluating strategic deception in large language models using the social deduction game Werewolf.",
+      "A naturalistic framework for evaluating strategic deception and falsehood generation in large language models, using the social deduction game Werewolf.",
     description:
-      "WOLF places LLMs inside Werewolf — where agents must deceive or detect deception — to surface behavioral vulnerabilities invisible to conventional benchmarks.",
+      "WOLF places LLMs inside the social deduction game Werewolf — where agents must actively deceive or detect deception — to surface behavioral vulnerabilities invisible to conventional benchmarks. The framework reveals how frontier models fail under adversarial social pressure, providing a rigorous lens for AI safety evaluation.",
     objective:
-      "Develop a principled framework for evaluating LLM deception in multi-agent settings.",
+      "Develop a principled, naturalistic framework for evaluating LLM deception behavior in multi-agent settings — revealing failure modes invisible to conventional benchmarks.",
     approach:
-      "Implemented Werewolf as a controlled multi-agent environment with protocols for deception rate, consistency, and strategic stability.",
+      "Implemented Werewolf as a controlled multi-agent environment. Designed evaluation protocols measuring deception success rate, cross-examination consistency, and strategic reasoning stability across model families and prompt regimes.",
     impact:
-      "Spotlighted at NeurIPS and IJCNLP-AACL. Cited by UPenn, Microsoft, and MBZUAI.",
+      "Spotlighted at NeurIPS and IJCNLP-AACL. Cited by UPenn, Microsoft, and MBZUAI. Among the first high-school-led research at these venues in LLM behavioral analysis.",
     period: "2025 – Present",
     venue: "NeurIPS · IJCNLP-AACL",
     technologies: ["Python", "GPT-4 API", "LangChain", "PyTorch", "LaTeX"],
@@ -70,51 +52,14 @@ export const projects: ProjectData[] = [
       { label: "arXiv", href: "https://arxiv.org/abs/2512.09187", icon: "paper" },
     ],
     accentColor: "#2563EB",
-    imageOnLeft: true,
-    hero: {
-      src: "/projects/wolf/hero.png",
-      alt: "WOLF research overview",
-      caption: "WOLF multi-agent evaluation framework",
-      placeholderHint: "public/projects/wolf/hero.png",
-    },
-    gallery: [
-      {
-        src: "/projects/wolf/paper.png",
-        alt: "WOLF paper figure",
-        caption: "Paper overview",
-        placeholderHint: "public/projects/wolf/paper.png",
-      },
-      {
-        src: "/projects/wolf/game-flow.png",
-        alt: "Werewolf game flow diagram",
-        caption: "Game flow",
-        placeholderHint: "public/projects/wolf/game-flow.png",
-      },
-    ],
-    researchVisuals: [
-      {
-        src: "/projects/wolf/architecture.png",
-        alt: "WOLF system architecture",
-        caption: "Architecture",
-        placeholderHint: "public/projects/wolf/architecture.png",
-      },
-      {
-        src: "/projects/wolf/benchmark.png",
-        alt: "Deception benchmark results",
-        caption: "Benchmarks",
-        placeholderHint: "public/projects/wolf/benchmark.png",
-      },
-      {
-        src: "/projects/wolf/figure.png",
-        alt: "Experiment figure",
-        caption: "Results",
-        placeholderHint: "public/projects/wolf/figure.png",
-      },
-    ],
     diagram: [
-      "LLM AGENTS → WEREWOLF ENGINE → ROLE ASSIGNMENT",
-      "MULTI-ROUND DISCUSSION & VOTING",
-      "DECEPTION LOGS → BEHAVIORAL CONSISTENCY → EVAL",
+      "LLM AGENTS → WEREWOLF ENGINE → ROLE ASSIGNMENT (Villager / Werewolf)",
+      "                    ↓",
+      "          MULTI-ROUND DISCUSSION & VOTING",
+      "              ↙                   ↘",
+      "    DECEPTION LOGS         DETECTION ANALYSIS",
+      "              ↘                   ↙",
+      "     BEHAVIORAL CONSISTENCY + STATISTICAL EVAL",
     ],
   },
   {
@@ -126,63 +71,28 @@ export const projects: ProjectData[] = [
     statusDot: "#059669",
     tagline: "Zero-shot ML model drift detection",
     brief:
-      "Detects distributional drift in model embeddings without labeled drift examples — lightweight monitoring for production AI.",
+      "A zero-shot framework for detecting distributional drift in ML model embeddings without labeled drift examples — enabling continuous, lightweight monitoring for production AI systems.",
     description:
-      "ZEDD detects when internal representations shift away from training distribution using zero-shot analysis on embedding spaces.",
-    objective: "Create a zero-shot drift detection framework operating purely on embeddings.",
+      "ZEDD addresses a critical gap in production ML reliability: detecting when a model's internal representations shift away from training distribution, without any labeled drift examples. By applying zero-shot analysis to embedding spaces, ZEDD enables scalable monitoring of model health across diverse deployment scenarios.",
+    objective:
+      "Create a zero-shot drift detection framework that operates purely on embedding representations — no labeled data required — enabling reliable ML monitoring at scale.",
     approach:
-      "Statistical tests and geometric analysis on embedding spaces, validated across architectures and deployment conditions.",
+      "Designed statistical tests and geometric analysis methods for detecting drift signatures in embedding spaces. Validated across multiple architectures, tasks, and deployment conditions. Benchmarked against supervised detection baselines.",
     impact:
-      "Applicable to agentic AI deployment, model reliability engineering, and robust ML pipelines.",
+      "Directly applicable to agentic AI deployment, model reliability engineering, and robust ML pipelines. Advances the state of ML monitoring for systems under distribution shift.",
     period: "2024 – Present",
     technologies: ["Python", "PyTorch", "HuggingFace", "Statistical Methods", "LaTeX"],
     links: [{ label: "arXiv", href: "https://arxiv.org/abs/2601.12359", icon: "paper" }],
     accentColor: "#059669",
-    imageOnLeft: false,
-    hero: {
-      src: "/projects/zedd/hero.png",
-      alt: "ZEDD drift detection overview",
-      caption: "Zero-shot drift monitoring pipeline",
-      placeholderHint: "public/projects/zedd/hero.png",
-    },
-    gallery: [
-      {
-        src: "/projects/zedd/paper.png",
-        alt: "ZEDD paper screenshot",
-        caption: "Publication",
-        placeholderHint: "public/projects/zedd/paper.png",
-      },
-      {
-        src: "/projects/zedd/embedding.png",
-        alt: "Embedding space visualization",
-        caption: "Embedding space",
-        placeholderHint: "public/projects/zedd/embedding.png",
-      },
-    ],
-    researchVisuals: [
-      {
-        src: "/projects/zedd/architecture.png",
-        alt: "ZEDD architecture diagram",
-        caption: "Architecture",
-        placeholderHint: "public/projects/zedd/architecture.png",
-      },
-      {
-        src: "/projects/zedd/drift-chart.png",
-        alt: "Drift detection chart",
-        caption: "Drift signals",
-        placeholderHint: "public/projects/zedd/drift-chart.png",
-      },
-      {
-        src: "/projects/zedd/benchmark.png",
-        alt: "Benchmark comparison",
-        caption: "Benchmarks",
-        placeholderHint: "public/projects/zedd/benchmark.png",
-      },
-    ],
     diagram: [
-      "PRODUCTION MODEL → EMBEDDING EXTRACTOR",
-      "ZERO-SHOT STATISTICAL DRIFT TESTS",
-      "DRIFT SIGNAL → ALERT + DIAGNOSTIC REPORT",
+      "PRODUCTION MODEL → EMBEDDING EXTRACTOR → REPRESENTATION SPACE",
+      "                                                  ↓",
+      "               ZERO-SHOT STATISTICAL DRIFT TESTS",
+      "               (no labeled examples required)",
+      "                             ↓",
+      "            DRIFT SIGNAL ←→ NO DRIFT SIGNAL",
+      "                 ↓",
+      "          ALERT + DIAGNOSTIC REPORT",
     ],
   },
   {
@@ -192,14 +102,17 @@ export const projects: ProjectData[] = [
     fullTitle: "AI-Powered Debate & Legislation Analysis Platform",
     status: "Live",
     statusDot: "#16A34A",
-    tagline: "Legislative analysis and debate preparation",
+    tagline: "AI-powered debate training & bill analysis",
     brief:
-      "Reads legislation, extracts arguments, and generates structured debate cases — reducing bill research from hours to minutes.",
+      "Reads real legislation, extracts key arguments, and generates structured debate cases for both sides — transforming hours of bill research into actionable preparation in minutes.",
     description:
-      "DebateSim ingests bill text, extracts policy arguments, and generates Pro/Con contentions with evidence tagging and rebuttal frameworks.",
-    objective: "Make high-quality debate preparation accessible through AI-powered legislative analysis.",
-    approach: "Full-stack platform: bill ingestion → argument extraction → case generation → rebuttal scaffolding.",
-    impact: "Used by debate students nationally at debatesim.us.",
+      "DebateSim uses an LLM pipeline to ingest bill text, extract policy arguments, and generate structured Pro/Con contentions with evidence tagging and rebuttal frameworks. Built for competitive debaters and policy researchers who need depth without the time cost of manual research.",
+    objective:
+      "Democratize access to high-quality debate preparation through AI-powered legislative analysis — making world-class research tools accessible to students at every level.",
+    approach:
+      "Built a full-stack platform with an LLM analysis pipeline: bill ingestion → argument extraction → structured case generation → rebuttal framework. Includes evidence tagging and cross-examination scaffolding.",
+    impact:
+      "Used by debate students nationally. Reduces bill research from hours to minutes. Demonstrates practical application of LLMs to real-world policy analysis.",
     period: "2022 – Present",
     technologies: ["Python", "OpenAI API", "LangChain", "HTML/CSS", "JavaScript"],
     links: [
@@ -211,48 +124,13 @@ export const projects: ProjectData[] = [
       },
     ],
     accentColor: "#D97706",
-    imageOnLeft: true,
-    hero: {
-      src: "/projects/debatesim/hero.png",
-      alt: "DebateSim homepage screenshot",
-      caption: "DebateSim — debatesim.us",
-      placeholderHint: "public/projects/debatesim/hero.png",
-    },
-    gallery: [
-      {
-        src: "/projects/debatesim/analysis.png",
-        alt: "Bill analysis interface",
-        caption: "Bill analysis",
-        placeholderHint: "public/projects/debatesim/analysis.png",
-      },
-      {
-        src: "/projects/debatesim/case-builder.png",
-        alt: "Case builder view",
-        caption: "Case builder",
-        placeholderHint: "public/projects/debatesim/case-builder.png",
-      },
-      {
-        src: "/projects/debatesim/features.png",
-        alt: "Key features overview",
-        caption: "Features",
-        placeholderHint: "public/projects/debatesim/features.png",
-      },
-    ],
-    mockup: {
-      title: "Live platform preview",
-      browserStyle: true,
-      images: [
-        {
-          src: "/projects/debatesim/screenshot.png",
-          alt: "DebateSim website in browser",
-          caption: "Full-width site capture",
-          placeholderHint: "public/projects/debatesim/screenshot.png",
-        },
-      ],
-    },
     diagram: [
-      "BILL TEXT → ANALYSIS PIPELINE → PRO / CON CASES",
-      "REBUTTAL FRAMEWORK + EVIDENCE TAGGING",
+      "BILL TEXT → ANALYSIS PIPELINE → ARGUMENT EXTRACTION",
+      "                                          ↓",
+      "               PRO CASE          CON CASE",
+      "          (contentions+evidence) (contentions+evidence)",
+      "                          ↓",
+      "          REBUTTAL FRAMEWORK + EVIDENCE TAGGING",
     ],
   },
   {
@@ -262,66 +140,27 @@ export const projects: ProjectData[] = [
     fullTitle: "Personalized Adaptive Mathematics Learning Platform",
     status: "Live",
     statusDot: "#16A34A",
-    tagline: "Adaptive competition math tutoring",
+    tagline: "Adaptive competition math tutoring platform",
     brief:
-      "Personalized problem sets, step-by-step explanations, and analytics — built from 550+ hours of coaching experience.",
+      "Delivers personalized problem sets, AI-generated step-by-step explanations, and performance analytics — built from 550+ hours of direct competition coaching experience.",
     description:
-      "MathSim personalizes problem sets, generates explanations, and tracks progress toward AMC, AIME, and MATHCOUNTS targets.",
-    objective: "Scale competition math preparation through adaptive instruction.",
-    approach: "Adaptive difficulty, curated problem bank, and AI explanations tuned to each student.",
-    impact: "Serves students preparing for national math competitions at mathsim.us.",
+      "MathSim closes the gap between undirected practice and strategic preparation by personalizing each student's problem set to their exact level, generating explanations in the student's style, and tracking progress toward AMC, AIME, and MATHCOUNTS targets.",
+    objective:
+      "Build an adaptive tutoring system that personalizes competition mathematics preparation — scaling the insights from 550+ hours of direct coaching experience.",
+    approach:
+      "Designed an adaptive difficulty system driven by performance data, built a curated problem bank with rich metadata, and implemented an AI explanation engine that adapts depth and style to each student's pattern.",
+    impact:
+      "Serves students preparing for AMC, AIME, and MATHCOUNTS. Scales individual tutoring insights into a continuously available, personalized platform.",
     period: "2023 – Present",
     technologies: ["Python", "OpenAI API", "LaTeX", "JavaScript", "PostgreSQL"],
     links: [{ label: "Live Site", href: "https://mathsim.us", icon: "globe" }],
     accentColor: "#7C3AED",
-    imageOnLeft: false,
-    hero: {
-      src: "/projects/mathsim/hero.png",
-      alt: "MathSim dashboard",
-      caption: "MathSim — mathsim.us",
-      placeholderHint: "public/projects/mathsim/hero.png",
-    },
-    gallery: [
-      {
-        src: "/projects/mathsim/dashboard.png",
-        alt: "Analytics dashboard",
-        caption: "Dashboard",
-        placeholderHint: "public/projects/mathsim/dashboard.png",
-      },
-      {
-        src: "/projects/mathsim/problem.png",
-        alt: "Problem view with explanation",
-        caption: "Problem view",
-        placeholderHint: "public/projects/mathsim/problem.png",
-      },
-      {
-        src: "/projects/mathsim/progress.png",
-        alt: "Student progress tracking",
-        caption: "Progress",
-        placeholderHint: "public/projects/mathsim/progress.png",
-      },
-    ],
-    mockup: {
-      title: "Platform mockups",
-      browserStyle: false,
-      images: [
-        {
-          src: "/projects/mathsim/mockup-dashboard.png",
-          alt: "MathSim dashboard mockup",
-          caption: "Dashboard mockup",
-          placeholderHint: "public/projects/mathsim/mockup-dashboard.png",
-        },
-        {
-          src: "/projects/mathsim/mockup-problem.png",
-          alt: "Example problem interface",
-          caption: "Problem interface",
-          placeholderHint: "public/projects/mathsim/mockup-problem.png",
-        },
-      ],
-    },
     diagram: [
-      "STUDENT PROFILE → ADAPTIVE SCHEDULER → PROBLEM BANK",
-      "AI EXPLANATION ENGINE + ANALYTICS DASHBOARD",
+      "STUDENT PROFILE → PERFORMANCE MODEL → ADAPTIVE SCHEDULER",
+      "       ↓                 ↓                    ↓",
+      " PROBLEM BANK    ANALYTICS DASHBOARD    SPACED PRACTICE",
+      "       ↓                 ↓                    ↓",
+      "       AI EXPLANATION ENGINE (depth adapts to student level)",
     ],
   },
 ];
