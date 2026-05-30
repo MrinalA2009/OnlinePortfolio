@@ -291,6 +291,13 @@ html.no-transition * { transition: none !important; }
   box-shadow: var(--shadow-md);
 }
 
+/* ─── About portrait ─────────────────────────────────── */
+.portrait-photo img {
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
 /* ─── Timeline ───────────────────────────────────────── */
 .tl-dot-pulse {
   animation: tl-pulse 2.4s ease-in-out infinite;

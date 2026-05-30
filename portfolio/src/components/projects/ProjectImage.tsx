@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { assetPath } from "@/lib/base-path";
 import ImagePlaceholder from "./ImagePlaceholder";
 
 type Props = {
@@ -52,7 +53,7 @@ export default function ProjectImage({
           <ImagePlaceholder hint={placeholderHint} label={alt} />
         ) : (
           <Image
-            src={src}
+            src={assetPath(src)}
             alt={alt}
             fill
             priority={priority}

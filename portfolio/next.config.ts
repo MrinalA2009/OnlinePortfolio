@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
   output: "export",       // Emit fully-static HTML/CSS/JS to ./out
   trailingSlash: true,    // /about → /about/index.html — required for GitHub Pages
   basePath,               // Empty locally; /<repo-name> on GitHub Actions
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   images: {
     unoptimized: true,    // Static export cannot use Next.js Image Optimization server
   },

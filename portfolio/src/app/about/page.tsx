@@ -1,6 +1,6 @@
 "use client";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import PortraitPhoto from "@/components/PortraitPhoto";
 import { useState } from "react";
 import AnimatedSection from "@/components/AnimatedSection";
 import StatCounter from "@/components/StatCounter";
@@ -174,33 +174,20 @@ export default function AboutPage() {
 
         {/* ── HEADER ── */}
         <section id="about-hero">
-          <AnimatedSection className="mb-16">
+          <AnimatedSection className="mb-12">
             <p className="label mb-3">About</p>
             <h1 className="heading-display mb-6">About</h1>
-            <p className="body-lg max-w-xl">
+            <p className="body-lg max-w-xl select-text">
               AI researcher, mathematician, debater, and developer.
             </p>
           </AnimatedSection>
 
-          {/* Bio + Profile */}
+          {/* Portrait + bio — rubric: high-quality photo, appealing placement */}
           <AnimatedSection className="mb-16">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start">
-              <div>
-                <div className="card p-6 sm:p-8 text-center overflow-hidden" style={{ boxShadow: "var(--shadow-sm)" }}>
-                  <div
-                    className="relative w-full aspect-[3/4] mx-auto mb-6 overflow-hidden rounded-xl"
-                    style={{ border: "1px solid var(--border)", boxShadow: "var(--shadow-md)", maxWidth: 520 }}
-                  >
-                    <Image
-                      src="/images/image.png"
-                      alt="Mrinal Agarwal — professional portrait"
-                      fill
-                      unoptimized
-                      sizes="(max-width: 1024px) 100vw, 520px"
-                      className="object-cover object-center"
-                      priority
-                    />
-                  </div>
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(280px,400px)_1fr] gap-10 lg:gap-14 items-start">
+              <div className="w-full max-w-md mx-auto lg:max-w-none lg:mx-0">
+                <PortraitPhoto />
+                <div className="card p-6 mt-6 text-center" style={{ boxShadow: "var(--shadow-sm)" }}>
                   <h2 className="heading-md mb-1">Mrinal Agarwal</h2>
                   <p className="body-sm mb-1" style={{ color: "var(--accent)" }}>High School Junior</p>
                   <p className="body-sm mb-5">Emerald High School · Dublin, CA · Class of 2027</p>
@@ -213,11 +200,11 @@ export default function AboutPage() {
                     ))}
                   </div>
                   <div className="space-y-2.5" style={{ borderTop: "1px solid var(--border)", paddingTop: "1.25rem" }}>
-                    <a href="mailto:smmrinal2009@gmail.com" className="flex items-center gap-2 text-xs transition-colors hover:text-[var(--accent)]" style={{ color: "var(--text-2)" }}>
+                    <a href="mailto:smmrinal2009@gmail.com" className="flex items-center justify-center gap-2 text-xs transition-colors hover:text-[var(--accent)]" style={{ color: "var(--text-2)" }}>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                       smmrinal2009@gmail.com
                     </a>
-                    <a href="https://www.linkedin.com/in/mrinal-agarwal-71017535a/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs transition-colors hover:text-[var(--accent)]" style={{ color: "var(--text-2)" }}>
+                    <a href="https://www.linkedin.com/in/mrinal-agarwal-71017535a/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-xs transition-colors hover:text-[var(--accent)]" style={{ color: "var(--text-2)" }}>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                       LinkedIn Profile
                     </a>
@@ -225,7 +212,7 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              <div className="space-y-5">
+              <div className="space-y-5 min-w-0">
                 <div className="card p-7" style={{ boxShadow: "var(--shadow-sm)" }}>
                   <h3 className="heading-md mb-4">Who I Am</h3>
                   <div className="space-y-4 body-md">

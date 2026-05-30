@@ -5,6 +5,7 @@ import { useState } from "react";
 import AnimatedSection from "@/components/AnimatedSection";
 import PageShell from "@/components/PageShell";
 import ProjectShowcase from "@/components/projects/ProjectShowcase";
+import { assetPath } from "@/lib/base-path";
 import { projects } from "@/lib/projects-data";
 
 export default function ProjectsPage() {
@@ -61,7 +62,7 @@ function PreviewCard({ project }: { project: (typeof projects)[0] }) {
       <div className="relative aspect-[16/10] w-full" style={{ background: "var(--bg-subtle)" }}>
         {!imgFailed ? (
           <Image
-            src={project.hero.src}
+            src={assetPath(project.hero.src)}
             alt=""
             fill
             unoptimized
