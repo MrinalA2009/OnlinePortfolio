@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -185,11 +186,18 @@ export default function AboutPage() {
           <AnimatedSection className="mb-16">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
               <div className="lg:col-span-2">
-                <div className="card p-8 text-center" style={{ boxShadow: "var(--shadow-sm)" }}>
-                  <div
-                    className="w-24 h-24 rounded-full mx-auto mb-5 flex items-center justify-center text-4xl font-black"
-                    style={{ background: "var(--accent-subtle)", border: "2px solid var(--accent-border)", color: "var(--accent)" }}
-                  >M</div>
+                <div className="card p-8 text-center overflow-hidden" style={{ boxShadow: "var(--shadow-sm)" }}>
+                  <div className="relative w-28 h-28 rounded-full mx-auto mb-5 overflow-hidden" style={{ border: "2px solid var(--border)" }}>
+                    <Image
+                      src="/images/mrinal-portrait.png"
+                      alt="Mrinal Agarwal"
+                      fill
+                      unoptimized
+                      sizes="112px"
+                      className="object-cover object-top"
+                      priority
+                    />
+                  </div>
                   <h2 className="heading-md mb-1">Mrinal Agarwal</h2>
                   <p className="body-sm mb-1" style={{ color: "var(--accent)" }}>High School Junior</p>
                   <p className="body-sm mb-5">Emerald High School · Dublin, CA · Class of 2027</p>

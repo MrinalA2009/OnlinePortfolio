@@ -283,6 +283,14 @@ html.no-transition * { transition: none !important; }
   background: var(--accent);
 }
 
+/* ─── Project imagery ────────────────────────────────── */
+.project-image-frame {
+  transition: box-shadow 0.25s ease;
+}
+.project-image-frame:hover {
+  box-shadow: var(--shadow-md);
+}
+
 /* ─── Timeline ───────────────────────────────────────── */
 .tl-dot-pulse {
   animation: tl-pulse 2.4s ease-in-out infinite;
