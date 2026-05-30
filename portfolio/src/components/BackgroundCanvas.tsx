@@ -135,11 +135,22 @@ export default function BackgroundCanvas({ className = "" }: { className?: strin
     };
     draw();
 
+    // Pause animation when tab is hidden — prevents GPU/CPU drain in background
+    const onVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animId);
+      } else {
+        draw();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
       canvas.removeEventListener("mousemove", onMouseMove);
       canvas.removeEventListener("mouseleave", onMouseLeave);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 

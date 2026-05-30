@@ -26,7 +26,7 @@ const highlights = [
   },
   {
     emoji: "🏆",
-    label: "National Debate",
+    label: "Public Forum Debate",
     title: "Ranked 2nd in the Nation",
     desc: "Public Forum Debate, 2025. National Sunvite Champion. Recognized in California and nationally.",
     color: "#7C3AED",
@@ -66,8 +66,8 @@ const areas = [
   },
   {
     number: "03",
-    title: "National Debate",
-    desc: "2nd in the Nation in Public Forum Debate. National Sunvite Champion 2025. Deep expertise in foreign policy analysis, evidence construction, and high-stakes public speaking.",
+    title: "Public Forum Debate",
+    desc: "2nd in the Nation in Public Forum Debate, 2025. National Sunvite Champion. Deep expertise in foreign policy analysis, evidence construction, and high-stakes public speaking.",
     tags: ["Public Forum", "Policy Research", "Foreign Affairs"],
     href: "/about",
     color: "#059669",
@@ -139,7 +139,7 @@ export default function Home() {
               { label: "AI Researcher", color: "#2563EB" },
               { label: "Mathematician", color: "#7C3AED" },
               { label: "Developer", color: "#D97706" },
-              { label: "National Debater", color: "#059669" },
+              { label: "PF Debater, 2nd in Nation", color: "#059669" },
             ].map(({ label, color }, i, arr) => (
               <span key={label} className="flex items-center gap-4">
                 <span style={{ fontSize: 14, fontWeight: 500, color }}>{label}</span>
@@ -234,7 +234,7 @@ export default function Home() {
             >
               <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: "linear-gradient(90deg, #2563EB 0%, #7C3AED 40%, #059669 70%, transparent 100%)" }} />
               <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
-                <StatCounter end={2} prefix="#" label="In Nation — Debate" description="Public Forum, 2025" />
+                <StatCounter end={2} prefix="#" label="In Nation, Public Forum" description="Public Forum Debate, 2025" />
                 <StatCounter end={400} suffix="+" label="Researchers in Peer Pool" description="NeurIPS & IJCNLP-AACL spotlight" />
                 <StatCounter end={550} suffix="+" label="Tutoring Hours" description="Across 3 programs" />
                 <StatCounter end={80} suffix="+" label="Math Club Members" description="EHS Math Club President" />

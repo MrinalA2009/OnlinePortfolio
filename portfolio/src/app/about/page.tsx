@@ -237,7 +237,7 @@ export default function AboutPage() {
             <div className="card p-10" style={{ boxShadow: "var(--shadow-sm)" }}>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <StatCounter end={2} label="Research Papers" description="NeurIPS · IJCNLP-AACL" />
-                <StatCounter end={2} prefix="#" label="In Nation — Debate" description="Public Forum, 2025" />
+                <StatCounter end={2} prefix="#" label="In Nation, Public Forum" description="Public Forum Debate, 2025" />
                 <StatCounter end={550} suffix="+" label="Tutoring Hours" description="Across all programs" />
                 <StatCounter end={2000} suffix="+" prefix="$" label="Raised for Math Club" description="Bootcamp & events" />
               </div>

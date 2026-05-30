@@ -15,15 +15,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Read the value that the flash-prevention script already applied
+    // The flash-prevention script in <head> already applied the correct data-theme.
+    // Read it back so React state stays in sync. Default is always "light".
     const current = document.documentElement.getAttribute("data-theme") as Theme | null;
-    if (current === "light" || current === "dark") {
-      setTheme(current);
-    } else {
-      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      setTheme(system);
-      document.documentElement.setAttribute("data-theme", system);
-    }
+    setTheme(current === "dark" ? "dark" : "light");
     setMounted(true);
   }, []);
 
