@@ -61,8 +61,8 @@ export default function SectionNav({ sections }: { sections: NavSection[] }) {
             <motion.div
               animate={{
                 width: isActive ? 22 : 6,
-                background: isActive ? "var(--accent)" : "var(--border)",
-                opacity: isActive ? 1 : 0.6,
+                background: isActive ? "var(--accent)" : "var(--text-3)",
+                opacity: 1,
               }}
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               style={{ height: 6, borderRadius: 3, flexShrink: 0 }}

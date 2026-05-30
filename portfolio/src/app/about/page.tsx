@@ -314,7 +314,7 @@ export default function AboutPage() {
                       layout
                       initial={{ opacity: 0, y: 20 }}
                       animate={{
-                        opacity: isAnyFocused && !isFocused ? 0.35 : 1,
+                        opacity: isAnyFocused && !isFocused ? 0.45 : 1,
                         y: 0,
                         scale: isFocused ? 1 : isAnyFocused ? 0.99 : 1,
                       }}
