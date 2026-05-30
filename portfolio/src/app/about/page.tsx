@@ -187,14 +187,17 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
               <div className="lg:col-span-2">
                 <div className="card p-8 text-center overflow-hidden" style={{ boxShadow: "var(--shadow-sm)" }}>
-                  <div className="relative w-28 h-28 rounded-full mx-auto mb-5 overflow-hidden" style={{ border: "2px solid var(--border)" }}>
+                  <div
+                    className="relative w-full max-w-[260px] aspect-[3/4] mx-auto mb-5 overflow-hidden rounded-xl"
+                    style={{ border: "1px solid var(--border)", boxShadow: "var(--shadow-sm)" }}
+                  >
                     <Image
-                      src="/images/mrinal-portrait.png"
-                      alt="Mrinal Agarwal"
+                      src="/images/image.png"
+                      alt="Mrinal Agarwal — professional portrait"
                       fill
                       unoptimized
-                      sizes="112px"
-                      className="object-cover object-top"
+                      sizes="(max-width: 1024px) 260px, 280px"
+                      className="object-cover object-center"
                       priority
                     />
                   </div>

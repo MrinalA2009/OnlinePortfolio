@@ -63,7 +63,7 @@ export const projects: ProjectData[] = [
     technologies: ["Python", "GPT-4 API", "LangChain", "PyTorch", "LaTeX"],
     links: [
       {
-        label: "GitHub",
+        label: "Documentation",
         href: "https://github.com/MrinalA2009/WOLF-Werewolf-based-Observations-for-LLM-Deception-and-Falsehoods",
         icon: "github",
       },
@@ -202,7 +202,14 @@ export const projects: ProjectData[] = [
     impact: "Used by debate students nationally at debatesim.us.",
     period: "2022 – Present",
     technologies: ["Python", "OpenAI API", "LangChain", "HTML/CSS", "JavaScript"],
-    links: [{ label: "Live Site", href: "https://debatesim.us", icon: "globe" }],
+    links: [
+      { label: "Live Site", href: "https://debatesim.us", icon: "globe" },
+      {
+        label: "Documentation",
+        href: "https://github.com/alexliao95311/DebateSim",
+        icon: "github",
+      },
+    ],
     accentColor: "#D97706",
     imageOnLeft: true,
     hero: {
