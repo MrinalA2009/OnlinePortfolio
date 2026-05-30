@@ -246,7 +246,13 @@ export default function ProjectsPage() {
                     </p>
                   )}
 
-                  <p className="body-md leading-relaxed mb-7 select-text">{selectedProject.description}</p>
+                  <div className="space-y-4 mb-7">
+                    {selectedProject.description.split("\n\n").map((paragraph) => (
+                      <p key={paragraph.slice(0, 48)} className="body-md leading-relaxed select-text">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-7">
                     {[

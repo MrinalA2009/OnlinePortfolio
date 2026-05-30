@@ -1,7 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import PortraitPhoto from "@/components/PortraitPhoto";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AnimatedSection from "@/components/AnimatedSection";
 import StatCounter from "@/components/StatCounter";
 import SectionNav from "@/components/SectionNav";
@@ -12,6 +12,8 @@ type Category = "All" | "Research" | "Mathematics" | "Debate" | "Development" | 
 
 interface Milestone {
   year: string;
+  /** Sub-year label when several milestones share a calendar year */
+  when?: string;
   category: Category;
   color: string;
   title: string;
@@ -20,6 +22,16 @@ interface Milestone {
   tags: string[];
   achievements?: string[];
   latest?: boolean;
+}
+
+function groupMilestonesByYear(items: Milestone[]) {
+  const groups: { year: string; items: Milestone[] }[] = [];
+  for (const item of items) {
+    const last = groups.at(-1);
+    if (!last || last.year !== item.year) groups.push({ year: item.year, items: [item] });
+    else last.items.push(item);
+  }
+  return groups;
 }
 
 const CATEGORIES: Category[] = ["All", "Research", "Mathematics", "Debate", "Development", "Leadership"];
@@ -70,9 +82,10 @@ const milestones: Milestone[] = [
     color: "#7C3AED",
     title: "Math Club President & MATHCOUNTS States",
     summary: "Elected President — first student from team to reach States",
-    desc: "Elected EHS Math Club President, leading 80+ students. Became the first student from the prior team to qualify to MATHCOUNTS States. Started as Lead Instructor at Fallon MATHCOUNTS.",
+    desc: "Elected EHS Math Club President, leading 80+ students. Became the first student from the prior team to qualify to MATHCOUNTS States.",
     tags: ["MATHCOUNTS", "Leadership", "AMC"],
-    achievements: ["EHS Math Club President", "MATHCOUNTS States qualifier", "150+ tutoring hours at Fallon"],
+    achievements: ["EHS Math Club President", "MATHCOUNTS States qualifier"],
+    when: "Fall 2023",
   },
   {
     year: "2023",
@@ -83,6 +96,7 @@ const milestones: Milestone[] = [
     desc: "Joined as Lead Instructor at Fallon MATHCOUNTS, designing curriculum for 200+ students and conducting 50+ advanced mathematics sessions. Helped multiple students qualify to States.",
     tags: ["Curriculum Design", "Instruction", "MATHCOUNTS"],
     achievements: ["150+ tutoring hours", "200+ students reached", "Multiple States qualifiers"],
+    when: "2023–24",
   },
   {
     year: "2024",
@@ -93,16 +107,40 @@ const milestones: Milestone[] = [
     desc: "Qualified for the AIME (Invitational Mathematics Examination), placing in the top 5% of AMC participants nationally. Recognized on the AIME Honor Roll.",
     tags: ["AIME", "AMC 10/12", "Honor Roll"],
     achievements: ["AMC top 5% nationally", "AIME qualification", "AIME Honor Roll"],
+    when: "Early 2024",
+  },
+  {
+    year: "2024",
+    category: "Development",
+    color: "#D97706",
+    title: "Git & GitHub Certification",
+    summary: "Certified in version control and collaborative development",
+    desc: "Completed Git & GitHub certification, strengthening workflow for open-source research repos and full-stack projects like DebateSim.",
+    tags: ["Git", "GitHub", "Version Control"],
+    achievements: ["Git & GitHub Certified"],
+    when: "Mid 2024",
+  },
+  {
+    year: "2024",
+    category: "Leadership",
+    color: "#DC2626",
+    title: "Varsity Badminton Captain",
+    summary: "Led varsity badminton team as captain",
+    desc: "Named Varsity Badminton Captain, leading team practices and competition preparation. Recognized with the Varsity Badminton Captain Award in 2024 and 2025.",
+    tags: ["Athletics", "Leadership", "Team Captain"],
+    achievements: ["Varsity Badminton Captain (2024 & 2025)", "Captain Award recipient"],
+    when: "2024–25",
   },
   {
     year: "2024",
     category: "Debate",
     color: "#059669",
-    title: "Competitive Debate — National Ascent",
-    summary: "Entered PF Debate — climbed to national ranking rapidly",
-    desc: "Entered competitive Public Forum Debate, rapidly advancing through national rankings. Developed extensive foreign policy and defense expertise. Earned Git & GitHub certification.",
+    title: "Public Forum Debate — National Circuit",
+    summary: "Entered PF Debate and advanced on national rankings",
+    desc: "Entered competitive Public Forum Debate and advanced on national rankings. Built deep foreign policy and defense research expertise for tournament preparation.",
     tags: ["Public Forum", "Foreign Policy", "Debate Research"],
-    achievements: ["Entered national competition circuit", "Git & GitHub Certified", "Varsity Badminton Captain"],
+    achievements: ["Entered national PF competition circuit", "Foreign policy & defense research"],
+    when: "Late 2024",
   },
   {
     year: "2025",
@@ -113,6 +151,7 @@ const milestones: Milestone[] = [
     desc: "AI research spotlighted at NeurIPS and IJCNLP-AACL — recognized among submissions from 400+ researchers and PhD professionals. WOLF and ZEDD cited by UPenn, Microsoft, and MBZUAI.",
     tags: ["NeurIPS", "IJCNLP-AACL", "LLM Research", "arXiv"],
     achievements: ["2 papers spotlighted", "Cited by UPenn, Microsoft, MBZUAI", "WOLF & ZEDD published"],
+    when: "Fall 2025",
     latest: true,
   },
   {
@@ -124,6 +163,7 @@ const milestones: Milestone[] = [
     desc: "Ranked 2nd in the Nation and 2nd in California in Public Forum Debate. Won the National Sunvite Championship. Recognized with the All American Academic Award.",
     tags: ["National Champion", "PF Debate", "All American Academic"],
     achievements: ["2nd in Nation (PF Debate)", "National Sunvite Champion", "All American Academic Award"],
+    when: "Spring 2025",
     latest: true,
   },
   {
@@ -135,6 +175,7 @@ const milestones: Milestone[] = [
     desc: "Founded and ran a summer mathematics bootcamp for 30+ students, raising over $2,000 for the EHS Math Club. Designed 15+ comprehensive lessons and practice systems from scratch.",
     tags: ["Curriculum Design", "Fundraising", "Leadership"],
     achievements: ["$2,000+ raised", "30+ students served", "15+ lessons designed"],
+    when: "Summer 2025",
     latest: true,
   },
 ];
@@ -161,6 +202,7 @@ export default function AboutPage() {
   const [focusedId, setFocusedId] = useState<string | null>(null);
 
   const filtered = milestones.filter((m) => activeCategory === "All" || m.category === activeCategory);
+  const grouped = useMemo(() => groupMilestonesByYear(filtered), [filtered]);
 
   const handleFocus = (id: string) => {
     setFocusedId((prev) => (prev === id ? null : id));
@@ -300,45 +342,69 @@ export default function AboutPage() {
 
               <motion.div layout className="space-y-6">
                 <AnimatePresence mode="popLayout">
-                  {filtered.map((item, i) => {
-                    const id = `${item.year}-${item.title}`;
-                    const isFocused = focusedId === id;
-                    const isLeft = i % 2 === 0;
-                    const isAnyFocused = focusedId !== null;
-
-                    return (
+                  {(() => {
+                    let itemIndex = 0;
+                    return grouped.flatMap((group) => [
                       <motion.div
-                        key={id}
+                        key={`year-${group.year}`}
                         layout
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{
-                          opacity: isAnyFocused && !isFocused ? 0.45 : 1,
-                          y: 0,
-                          scale: isFocused ? 1 : isAnyFocused ? 0.99 : 1,
-                        }}
-                        exit={{ opacity: 0, y: -10, scale: 0.97 }}
-                        transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                        className="relative flex flex-row items-start gap-0"
-                        onClick={() => handleFocus(id)}
+                        className="relative py-2"
                       >
-                        <div className="w-[calc(50%-30px)] pr-8">
-                          {isLeft && (
-                            <MilestoneCard item={item} isFocused={isFocused} accentSide="right" />
-                          )}
-                        </div>
+                        <TimelineYearHeading year={group.year} count={group.items.length} />
+                      </motion.div>,
+                      ...group.items.map((item) => {
+                        const i = itemIndex++;
+                        const id = `${item.year}-${item.title}`;
+                        const isFocused = focusedId === id;
+                        const isLeft = i % 2 === 0;
+                        const isAnyFocused = focusedId !== null;
+                        const showYearOnCard = group.items.length === 1;
 
-                        <div className="w-[60px] flex justify-center items-start pt-6 flex-shrink-0 relative z-10">
-                          <TimelineDot item={item} isFocused={isFocused} index={i} />
-                        </div>
+                        return (
+                          <motion.div
+                            key={id}
+                            layout
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{
+                              opacity: isAnyFocused && !isFocused ? 0.45 : 1,
+                              y: 0,
+                              scale: isFocused ? 1 : isAnyFocused ? 0.99 : 1,
+                            }}
+                            exit={{ opacity: 0, y: -10, scale: 0.97 }}
+                            transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                            className="relative flex flex-row items-start gap-0"
+                            onClick={() => handleFocus(id)}
+                          >
+                            <div className="w-[calc(50%-30px)] pr-8">
+                              {isLeft && (
+                                <MilestoneCard
+                                  item={item}
+                                  isFocused={isFocused}
+                                  accentSide="right"
+                                  showYearBadge={showYearOnCard}
+                                />
+                              )}
+                            </div>
 
-                        <div className="w-[calc(50%-30px)] pl-8">
-                          {!isLeft && (
-                            <MilestoneCard item={item} isFocused={isFocused} accentSide="left" />
-                          )}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+                            <div className="w-[60px] flex justify-center items-start pt-6 flex-shrink-0 relative z-10">
+                              <TimelineDot item={item} isFocused={isFocused} index={i} />
+                            </div>
+
+                            <div className="w-[calc(50%-30px)] pl-8">
+                              {!isLeft && (
+                                <MilestoneCard
+                                  item={item}
+                                  isFocused={isFocused}
+                                  accentSide="left"
+                                  showYearBadge={showYearOnCard}
+                                />
+                              )}
+                            </div>
+                          </motion.div>
+                        );
+                      }),
+                    ]);
+                  })()}
                 </AnimatePresence>
 
                 {filtered.length === 0 && (
@@ -363,35 +429,50 @@ export default function AboutPage() {
 
               <motion.div layout className="space-y-6">
                 <AnimatePresence mode="popLayout">
-                  {filtered.map((item, i) => {
-                    const id = `${item.year}-${item.title}`;
-                    const isFocused = focusedId === id;
-                    const isAnyFocused = focusedId !== null;
+                  {(() => {
+                    let itemIndex = 0;
+                    return grouped.flatMap((group) => [
+                      <motion.div key={`year-${group.year}`} layout className="pl-6 py-2">
+                        <TimelineYearHeading year={group.year} count={group.items.length} />
+                      </motion.div>,
+                      ...group.items.map((item) => {
+                        const i = itemIndex++;
+                        const id = `${item.year}-${item.title}`;
+                        const isFocused = focusedId === id;
+                        const isAnyFocused = focusedId !== null;
+                        const showYearOnCard = group.items.length === 1;
 
-                    return (
-                      <motion.div
-                        key={id}
-                        layout
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{
-                          opacity: isAnyFocused && !isFocused ? 0.45 : 1,
-                          y: 0,
-                          scale: isFocused ? 1 : isAnyFocused ? 0.99 : 1,
-                        }}
-                        exit={{ opacity: 0, y: -10, scale: 0.97 }}
-                        transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                        className="relative flex gap-3 items-start"
-                        onClick={() => handleFocus(id)}
-                      >
-                        <div className="flex-shrink-0 w-[15px] flex justify-center pt-6 relative z-10">
-                          <TimelineDot item={item} isFocused={isFocused} index={i} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <MilestoneCard item={item} isFocused={isFocused} accentSide="left" />
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+                        return (
+                          <motion.div
+                            key={id}
+                            layout
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{
+                              opacity: isAnyFocused && !isFocused ? 0.45 : 1,
+                              y: 0,
+                              scale: isFocused ? 1 : isAnyFocused ? 0.99 : 1,
+                            }}
+                            exit={{ opacity: 0, y: -10, scale: 0.97 }}
+                            transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                            className="relative flex gap-3 items-start"
+                            onClick={() => handleFocus(id)}
+                          >
+                            <div className="flex-shrink-0 w-[15px] flex justify-center pt-6 relative z-10">
+                              <TimelineDot item={item} isFocused={isFocused} index={i} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <MilestoneCard
+                                item={item}
+                                isFocused={isFocused}
+                                accentSide="left"
+                                showYearBadge={showYearOnCard}
+                              />
+                            </div>
+                          </motion.div>
+                        );
+                      }),
+                    ]);
+                  })()}
                 </AnimatePresence>
 
                 {filtered.length === 0 && (
@@ -471,6 +552,25 @@ export default function AboutPage() {
   );
 }
 
+function TimelineYearHeading({ year, count }: { year: string; count: number }) {
+  return (
+    <div className="flex items-center gap-4 w-full">
+      <div className="flex-1 h-px" style={{ background: "var(--border)" }} />
+      <div className="flex flex-col items-center gap-0.5 shrink-0">
+        <span className="text-sm font-bold tracking-wide" style={{ color: "var(--text-1)" }}>
+          {year}
+        </span>
+        {count > 1 && (
+          <span className="text-[10px] font-medium uppercase tracking-wider" style={{ color: "var(--text-3)" }}>
+            {count} milestones
+          </span>
+        )}
+      </div>
+      <div className="flex-1 h-px" style={{ background: "var(--border)" }} />
+    </div>
+  );
+}
+
 function TimelineDot({ item, isFocused, index }: { item: Milestone; isFocused: boolean; index: number }) {
   return (
     <motion.div
@@ -492,11 +592,13 @@ function TimelineDot({ item, isFocused, index }: { item: Milestone; isFocused: b
   );
 }
 
-function MilestoneCard({ item, isFocused, accentSide }: {
+function MilestoneCard({ item, isFocused, accentSide, showYearBadge = true }: {
   item: Milestone;
   isFocused: boolean;
   accentSide: "left" | "right";
+  showYearBadge?: boolean;
 }) {
+  const timingLabel = item.when ?? item.year;
   return (
     <motion.div
       layout
@@ -513,13 +615,15 @@ function MilestoneCard({ item, isFocused, accentSide }: {
       }}
     >
       <div className="p-5">
-        <div className="flex items-center gap-2 mb-2 justify-start">
-          <span
-            className="text-xs font-bold px-2 py-0.5 rounded"
-            style={{ background: `${item.color}15`, color: item.color }}
-          >
-            {item.year}
-          </span>
+        <div className="flex items-center gap-2 mb-2 justify-start flex-wrap">
+          {(showYearBadge || item.when) && (
+            <span
+              className="text-xs font-bold px-2 py-0.5 rounded"
+              style={{ background: `${item.color}15`, color: item.color }}
+            >
+              {timingLabel}
+            </span>
+          )}
           <span
             className="text-xs font-medium px-2 py-0.5 rounded"
             style={{ background: `${item.color}10`, color: item.color, border: `1px solid ${item.color}25` }}

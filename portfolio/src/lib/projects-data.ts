@@ -31,15 +31,15 @@ export const projects: Project[] = [
     statusDot: "#2563EB",
     tagline: "Multi-agent LLM deception research",
     brief:
-      "A naturalistic framework for evaluating strategic deception and falsehood generation in large language models, using the social deduction game Werewolf.",
+      "Werewolf-based benchmark measuring LLM deception production and detection. Across 7,320 statements, Werewolves deceived in 31% of turns while peer detection reached 71–73% precision.",
     description:
-      "WOLF places LLMs inside the social deduction game Werewolf — where agents must actively deceive or detect deception — to surface behavioral vulnerabilities invisible to conventional benchmarks. The framework reveals how frontier models fail under adversarial social pressure, providing a rigorous lens for AI safety evaluation.",
+      "WOLF embeds role-grounded LLM agents (Villager, Werewolf, Seer, Doctor) in a programmable LangGraph Werewolf environment with night–day cycles, debate, and voting. Every public statement is analyzed with speaker self-assessments and peer deception ratings across a taxonomy of omission, distortion, fabrication, and misdirection.\n\nKey results from 100 full games: Werewolves produced deceptive statements in 31% of turns. Peer detection achieved 71–73% precision and 52% overall accuracy, with higher precision for identifying Werewolves but some false positives against truthful Villagers. Suspicion toward Werewolves rose from 52% to over 60% across rounds, while suspicion toward Villagers and the Doctor stabilized near 44–46% — extended interaction improved recall against liars without compounding errors against honest roles.",
     objective:
-      "Develop a principled, naturalistic framework for evaluating LLM deception behavior in multi-agent settings — revealing failure modes invisible to conventional benchmarks.",
+      "Measure how often and in what forms LLMs deceive, how accurately they detect deception in peers, and how trust and suspicion evolve across multi-turn adversarial interaction.",
     approach:
-      "Implemented Werewolf as a controlled multi-agent environment. Designed evaluation protocols measuring deception success rate, cross-examination consistency, and strategic reasoning stability across model families and prompt regimes.",
+      "Built an eight-player Werewolf loop with structured logging, statement-level deception labels, exponential smoothing of suspicion scores, and subsystem ablations with deterministic controls for reproducibility.",
     impact:
-      "Spotlighted at NeurIPS and IJCNLP-AACL. Cited by UPenn, Microsoft, and MBZUAI. Among the first high-school-led research at these venues in LLM behavioral analysis.",
+      "Spotlighted at NeurIPS and IJCNLP-AACL. Cited by UPenn, Microsoft, and MBZUAI. Demonstrates that deception scales faster than detection in multi-agent LLM systems.",
     period: "2025 – Present",
     venue: "NeurIPS · IJCNLP-AACL",
     technologies: ["Python", "GPT-4 API", "LangChain", "PyTorch", "LaTeX"],
@@ -71,15 +71,15 @@ export const projects: Project[] = [
     statusDot: "#059669",
     tagline: "Zero-shot ML model drift detection",
     brief:
-      "A zero-shot framework for detecting distributional drift in ML model embeddings without labeled drift examples — enabling continuous, lightweight monitoring for production AI systems.",
+      "Lightweight zero-shot defense against prompt injection via embedding drift. Achieves greater than 93% detection accuracy with under 3% false positives on Llama 3, Mistral, and Qwen 2.",
     description:
-      "ZEDD addresses a critical gap in production ML reliability: detecting when a model's internal representations shift away from training distribution, without any labeled drift examples. By applying zero-shot analysis to embedding spaces, ZEDD enables scalable monitoring of model health across diverse deployment scenarios.",
+      "ZEDD (Zero-Shot Embedding Drift Detection) flags direct and indirect prompt injections by measuring cosine drift between embeddings of benign prompts and suspect variants. The method uses fine-tuned encoders plus Gaussian Mixture Modeling and Kernel Density Estimation to set thresholds — without model internals, attack-specific retraining, or heavy inference overhead.\n\nKey results on 51,603 held-out prompt pairs from the LLMail-Inject dataset (jailbreak, system leak, task override, encoding manipulation, prompt confusion): greater than 93% accuracy across Llama 3, Qwen 2, and Mistral with a false positive rate under 3%. Best encoders reached about 95% accuracy with 96%+ precision (e.g., Mistral 7B: 95.55% accuracy, 96.58% precision, 2.3% clean FPR). Detection rates exceeded 90% on most attack categories while keeping clean prompts rarely flagged.",
     objective:
-      "Create a zero-shot drift detection framework that operates purely on embedding representations — no labeled data required — enabling reliable ML monitoring at scale.",
+      "Detect prompt injection attacks by quantifying semantic shift in embedding space between clean and adversarial prompt pairs, with minimal compute and integration cost.",
     approach:
-      "Designed statistical tests and geometric analysis methods for detecting drift signatures in embedding spaces. Validated across multiple architectures, tasks, and deployment conditions. Benchmarked against supervised detection baselines.",
+      "Fine-tune sentence/LLM encoders on clean–clean and injected–clean pairs, compute 1 − cosine similarity as drift, then classify via two-component GMM with KDE fallback and a 3% false-positive cap on the clean distribution.",
     impact:
-      "Directly applicable to agentic AI deployment, model reliability engineering, and robust ML pipelines. Advances the state of ML monitoring for systems under distribution shift.",
+      "Offers a scalable first-line defense for LLM pipelines. Outperforms many heavier classifiers on precision and F1 while remaining lightweight enough for production deployment.",
     period: "2024 – Present",
     technologies: ["Python", "PyTorch", "HuggingFace", "Statistical Methods", "LaTeX"],
     links: [{ label: "arXiv", href: "https://arxiv.org/abs/2601.12359", icon: "paper" }],
