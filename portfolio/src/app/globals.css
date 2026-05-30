@@ -276,24 +276,6 @@ html.no-transition * { transition: none !important; }
 }
 
 /* ─── Timeline ───────────────────────────────────────── */
-.timeline-line {
-  position: absolute;
-  left: 7px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--border);
-}
-.timeline-dot {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 2px solid var(--accent);
-  flex-shrink: 0;
-  margin-top: 3px;
-}
-/* Alternating zigzag timeline dot — for the dynamic desktop layout */
 .tl-dot-pulse {
   animation: tl-pulse 2.4s ease-in-out infinite;
 }

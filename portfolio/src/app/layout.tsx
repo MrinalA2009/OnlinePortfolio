@@ -16,7 +16,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Mrinal Agarwal's Online Portfolio",
+  title: {
+    default: "Mrinal Agarwal's Online Portfolio",
+    template: "%s — Mrinal Agarwal's Online Portfolio",
+  },
   description:
     "Portfolio of Mrinal Agarwal — NeurIPS spotlighted AI researcher, nationally ranked Public Forum debater, AIME qualifier, and builder of DebateSim and MathSim.",
   authors: [{ name: "Mrinal Agarwal" }],

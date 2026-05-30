@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import AnimatedSection from "@/components/AnimatedSection";
 import MagneticButton from "@/components/MagneticButton";
+import PageShell from "@/components/PageShell";
 import Link from "next/link";
 
 type LinkItem = { label: string; href: string; icon: "globe" | "github" | "paper" };
@@ -177,14 +178,14 @@ export default function ProjectsPage() {
 
   // Escape to close
   useEffect(() => {
+    if (!selected) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setSelected(null); };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [selected]);
 
   return (
-    <div style={{ background: "var(--bg-base)" }} className="pt-24 pb-20">
-      <div className="max-w-5xl mx-auto px-5">
+    <PageShell>
 
         {/* Header */}
         <AnimatedSection className="mb-14">
@@ -278,7 +279,6 @@ export default function ProjectsPage() {
             </MagneticButton>
           </div>
         </AnimatedSection>
-      </div>
 
       {/* ── PROJECT PORTAL — full-screen expansion via layoutId ── */}
       <AnimatePresence>
@@ -294,13 +294,19 @@ export default function ProjectsPage() {
               className="fixed inset-0 z-[60]"
               style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(4px)" }}
               onClick={() => setSelected(null)}
+              aria-hidden="true"
             />
 
             {/* Expanded card — shares layoutId with the grid card */}
-            <div className="fixed inset-0 z-[70] flex items-start justify-center p-4 md:p-10 pointer-events-none overflow-auto">
+            <div
+              className="fixed inset-0 z-[70] flex items-start justify-center p-4 md:p-10 pointer-events-none overflow-auto"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="project-dialog-title"
+            >
               <motion.div
                 layoutId={`project-${selected}`}
-                className="pointer-events-auto w-full max-w-3xl"
+                className="pointer-events-auto w-full max-w-3xl my-auto"
                 style={{
                   background: "var(--surface)",
                   border: "1px solid var(--border)",
@@ -332,13 +338,14 @@ export default function ProjectsPage() {
                       <div className="flex items-center gap-3">
                         <span className="text-4xl">{selectedProject.emoji}</span>
                         <div>
-                          <h2 className="heading-lg" style={{ color: selectedProject.accentColor }}>{selectedProject.title}</h2>
+                          <h2 id="project-dialog-title" className="heading-lg" style={{ color: selectedProject.accentColor }}>{selectedProject.title}</h2>
                           <p className="body-sm mt-0.5 italic">{selectedProject.fullTitle}</p>
                         </div>
                       </div>
                     </div>
                     <button
                       onClick={() => setSelected(null)}
+                      aria-label="Close project details"
                       className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-colors"
                       style={{ background: "var(--bg-subtle)", border: "1px solid var(--border)", color: "var(--text-2)" }}
                     >
@@ -426,6 +433,6 @@ export default function ProjectsPage() {
           </>
         )}
       </AnimatePresence>
-    </div>
+    </PageShell>
   );
 }
