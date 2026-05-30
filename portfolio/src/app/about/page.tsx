@@ -184,19 +184,19 @@ export default function AboutPage() {
 
           {/* Bio + Profile */}
           <AnimatedSection className="mb-16">
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-              <div className="lg:col-span-2">
-                <div className="card p-8 text-center overflow-hidden" style={{ boxShadow: "var(--shadow-sm)" }}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start">
+              <div>
+                <div className="card p-6 sm:p-8 text-center overflow-hidden" style={{ boxShadow: "var(--shadow-sm)" }}>
                   <div
-                    className="relative w-full max-w-[260px] aspect-[3/4] mx-auto mb-5 overflow-hidden rounded-xl"
-                    style={{ border: "1px solid var(--border)", boxShadow: "var(--shadow-sm)" }}
+                    className="relative w-full aspect-[3/4] mx-auto mb-6 overflow-hidden rounded-xl"
+                    style={{ border: "1px solid var(--border)", boxShadow: "var(--shadow-md)", maxWidth: 520 }}
                   >
                     <Image
                       src="/images/image.png"
                       alt="Mrinal Agarwal — professional portrait"
                       fill
                       unoptimized
-                      sizes="(max-width: 1024px) 260px, 280px"
+                      sizes="(max-width: 1024px) 100vw, 520px"
                       className="object-cover object-center"
                       priority
                     />
@@ -225,7 +225,7 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              <div className="lg:col-span-3 space-y-5">
+              <div className="space-y-5">
                 <div className="card p-7" style={{ boxShadow: "var(--shadow-sm)" }}>
                   <h3 className="heading-md mb-4">Who I Am</h3>
                   <div className="space-y-4 body-md">
