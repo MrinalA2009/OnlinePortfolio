@@ -34,7 +34,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-5 flex items-center justify-between h-14">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
+        <Link href="/" className="flex items-center gap-2.5 group select-none">
           <div
             className="w-7 h-7 rounded-md flex items-center justify-center text-xs font-bold transition-transform duration-200 group-hover:scale-105"
             style={{ background: "var(--accent)", color: "var(--accent-fg)" }}

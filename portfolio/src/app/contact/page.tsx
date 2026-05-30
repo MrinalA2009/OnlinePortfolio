@@ -32,9 +32,7 @@ export default function ContactPage() {
         {/* Header */}
         <AnimatedSection className="mb-14">
           <p className="label mb-3">Get in Touch</p>
-          <h1 className="heading-display mb-5">
-            Let&apos;s <span className="gradient-text">Connect</span>
-          </h1>
+          <h1 className="heading-display mb-5">Contact</h1>
           <p className="body-lg max-w-xl">
             Whether you&apos;re a research lab, admissions office, recruiter, or fellow student — I&apos;d love to hear from you.
           </p>
@@ -130,7 +128,7 @@ export default function ContactPage() {
                   className="card p-14 text-center"
                   style={{ boxShadow: "var(--shadow-sm)" }}
                 >
-                  <div className="text-5xl mb-6">✅</div>
+                  <div className="text-5xl mb-6" aria-hidden="true" style={{ color: "var(--success)" }}>✓</div>
                   <h3 className="heading-md mb-3">Message Sent!</h3>
                   <p className="body-md max-w-xs mx-auto mb-8">
                     Thank you for reaching out. I&apos;ll respond within 24–48 hours.

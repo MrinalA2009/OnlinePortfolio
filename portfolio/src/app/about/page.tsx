@@ -175,9 +175,7 @@ export default function AboutPage() {
         <section id="about-hero">
           <AnimatedSection className="mb-16">
             <p className="label mb-3">About</p>
-            <h1 className="heading-display mb-6">
-              About <span className="gradient-text">Mrinal</span>
-            </h1>
+            <h1 className="heading-display mb-6">About</h1>
             <p className="body-lg max-w-xl">
               AI researcher, mathematician, debater, and developer.
             </p>
@@ -253,8 +251,8 @@ export default function AboutPage() {
               <div>
                 <p className="label mb-2">Journey</p>
                 <h2 className="heading-xl">My Timeline</h2>
-                <p className="body-sm mt-2" style={{ color: "var(--text-3)" }}>
-                  Filter by area · Click any milestone to explore
+                  <p className="body-sm mt-2" style={{ color: "var(--text-3)" }}>
+                  Filter by category · Select a milestone for details
                 </p>
               </div>
             </div>
@@ -462,10 +460,10 @@ export default function AboutPage() {
         {/* ── CTA ── */}
         <AnimatedSection>
           <div className="card p-10 text-center" style={{ boxShadow: "var(--shadow-sm)" }}>
-            <h3 className="heading-lg mb-3">Interested in Collaborating?</h3>
-            <p className="body-md max-w-md mx-auto mb-7">Research collaborations, academic opportunities, or just a conversation — always open to connecting with motivated people.</p>
+            <h3 className="heading-lg mb-3">Contact</h3>
+            <p className="body-md max-w-md mx-auto mb-7 select-text">For research collaborations, academic inquiries, or professional conversation.</p>
             <div className="flex gap-3 justify-center flex-wrap">
-              <Link href="/contact" className="btn btn-primary px-5 py-2.5">Get in Touch</Link>
+              <Link href="/contact" className="btn btn-primary px-5 py-2.5">Contact</Link>
               <Link href="/projects" className="btn btn-secondary px-5 py-2.5">View Projects</Link>
             </div>
           </div>
@@ -584,7 +582,7 @@ function MilestoneCard({ item, isFocused, accentSide }: {
             style={{ color: "var(--text-3)" }}
           >
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-            tap to expand
+            tap for details
           </div>
         )}
       </div>

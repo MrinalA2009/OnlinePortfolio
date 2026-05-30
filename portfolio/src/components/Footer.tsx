@@ -23,8 +23,8 @@ export default function Footer() {
                 Mrinal Agarwal
               </span>
             </div>
-            <p className="body-sm max-w-52 leading-relaxed">
-              AI researcher, mathematician, debater, and developer. Building the future through research and education.
+            <p className="body-sm max-w-52 leading-relaxed select-text">
+              AI research, mathematics, debate, and software development.
             </p>
           </div>
 

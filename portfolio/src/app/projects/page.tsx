@@ -2,7 +2,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import AnimatedSection from "@/components/AnimatedSection";
-import MagneticButton from "@/components/MagneticButton";
 import PageShell from "@/components/PageShell";
 import Link from "next/link";
 
@@ -190,9 +189,7 @@ export default function ProjectsPage() {
         {/* Header */}
         <AnimatedSection className="mb-14">
           <p className="label mb-3">Portfolio</p>
-          <h1 className="heading-display mb-5">
-            Research &amp; <span className="gradient-text">Projects</span>
-          </h1>
+          <h1 className="heading-display mb-5">Projects</h1>
           <p className="body-lg max-w-2xl">
             Two published AI research papers and two live platforms. Click any project to explore the full story.
           </p>
@@ -230,12 +227,9 @@ export default function ProjectsPage() {
                           {p.status}
                         </span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-3xl">{p.emoji}</span>
-                        <div>
-                          <h2 className="heading-md" style={{ color: p.accentColor }}>{p.title}</h2>
-                          <p className="body-sm mt-0.5">{p.tagline}</p>
-                        </div>
+                      <div>
+                        <h2 className="heading-md">{p.title}</h2>
+                        <p className="body-sm mt-0.5">{p.tagline}</p>
                       </div>
                     </div>
                     {/* Enter arrow */}
@@ -269,14 +263,11 @@ export default function ProjectsPage() {
         {/* CTA */}
         <AnimatedSection>
           <div className="card p-10 text-center" style={{ boxShadow: "var(--shadow-sm)" }}>
-            <h3 className="heading-lg mb-3">Interested in Collaborating?</h3>
-            <p className="body-md max-w-md mx-auto mb-7">Research opportunities, open-source work, or a technical conversation — always open.</p>
-            <MagneticButton>
-              <Link href="/contact" className="btn btn-primary px-6 py-2.5 inline-flex">
-                Reach Out
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </Link>
-            </MagneticButton>
+            <h3 className="heading-lg mb-3">Contact</h3>
+            <p className="body-md max-w-md mx-auto mb-7">For research, collaboration, or technical discussion.</p>
+            <Link href="/contact" className="btn btn-primary px-6 py-2.5 inline-flex">
+              Get in touch
+            </Link>
           </div>
         </AnimatedSection>
 
@@ -335,12 +326,9 @@ export default function ProjectsPage() {
                         </span>
                         <span className="body-sm" style={{ color: "var(--text-3)" }}>{selectedProject.period}</span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-4xl">{selectedProject.emoji}</span>
-                        <div>
-                          <h2 id="project-dialog-title" className="heading-lg" style={{ color: selectedProject.accentColor }}>{selectedProject.title}</h2>
-                          <p className="body-sm mt-0.5 italic">{selectedProject.fullTitle}</p>
-                        </div>
+                      <div>
+                        <h2 id="project-dialog-title" className="heading-lg">{selectedProject.title}</h2>
+                        <p className="body-sm mt-0.5">{selectedProject.fullTitle}</p>
                       </div>
                     </div>
                     <button

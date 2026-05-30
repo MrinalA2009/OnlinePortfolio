@@ -136,7 +136,7 @@ export default function ResumePage() {
 
         {/* Education */}
         <AnimatedSection className="mb-8">
-          <ResumeSection icon="🎓" title="Education">
+          <ResumeSection title="Education">
             <div className="card p-7" style={{ boxShadow: "var(--shadow-sm)" }}>
               <div className="flex flex-col sm:flex-row sm:justify-between gap-3 mb-5">
                 <div>
@@ -163,7 +163,7 @@ export default function ResumePage() {
 
         {/* Extracurriculars */}
         <AnimatedSection className="mb-8">
-          <ResumeSection icon="⭐" title="Extracurricular Activities">
+          <ResumeSection title="Extracurricular Activities">
             <div className="space-y-3">
               {extracurriculars.map((item, i) => (
                 <AnimatedSection key={item.title} delay={i * 0.06}>
@@ -176,7 +176,7 @@ export default function ResumePage() {
 
         {/* Volunteer */}
         <AnimatedSection className="mb-8">
-          <ResumeSection icon="🤝" title="Volunteer & Work Experience">
+          <ResumeSection title="Volunteer & Work Experience">
             <div className="space-y-3">
               {volunteer.map((item, i) => (
                 <AnimatedSection key={item.title} delay={i * 0.06}>
@@ -189,7 +189,7 @@ export default function ResumePage() {
 
         {/* Awards */}
         <AnimatedSection className="mb-8">
-          <ResumeSection icon="🏆" title="Awards & Certifications">
+          <ResumeSection title="Awards & Certifications">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {awards.map((a, i) => (
                 <AnimatedSection key={a.name} delay={i * 0.05}>
@@ -211,7 +211,7 @@ export default function ResumePage() {
 
         {/* Skills */}
         <AnimatedSection className="mb-12">
-          <ResumeSection icon="⚡" title="Skills">
+          <ResumeSection title="Skills">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="card p-6" style={{ boxShadow: "var(--shadow-sm)" }}>
                 <p className="label mb-4">Technical</p>
@@ -237,11 +237,10 @@ export default function ResumePage() {
   );
 }
 
-function ResumeSection({ icon, title, children }: { icon: string; title: string; children: React.ReactNode }) {
+function ResumeSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
       <div className="flex items-center gap-3 mb-5">
-        <span className="text-lg">{icon}</span>
         <h2 className="heading-md">{title}</h2>
         <div className="flex-1 h-px" style={{ background: "var(--border)" }} />
       </div>
